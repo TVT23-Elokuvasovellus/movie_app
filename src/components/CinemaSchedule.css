@@ -15,6 +15,11 @@
   min-height: 800px;
 }
 
+.dark-mode .container {
+  border: 2px solid #ffffff;
+  background-color: #333333;
+}
+
 /* Dropdown Container Styles */
 .dropdown-container {
   position: absolute;
@@ -28,6 +33,10 @@
   border-radius: 8px;
   box-shadow: none;
   border: none;
+}
+
+.dark-mode .dropdown-container {
+  background: #444444;
 }
 
 /* Movies Container Styles */
@@ -46,6 +55,10 @@
   margin-top: 0;
   padding-top: 40px;
   min-height: 600px;
+}
+
+.dark-mode .movies-container-wrapper {
+  background-color: #333333;
 }
 
 /* Movies Container */
@@ -88,6 +101,12 @@
   cursor: not-allowed;
 }
 
+.dark-mode .pagination-button {
+  background-color: #444444;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
 /* Movie Card Styles */
 .movie {
   border: 1px solid #ccc;
@@ -102,6 +121,11 @@
   flex-direction: column;
   justify-content: space-between;
   height: 700px;
+}
+
+.dark-mode .movie {
+  border: 1px solid #444444;
+  background-color: #555555;
 }
 
 .movie img {
@@ -119,6 +143,10 @@
   transition: all 0.3s ease-in-out;
 }
 
+.dark-mode .movie h2 {
+  color: #ffffff;
+}
+
 .movie h2:hover {
   overflow: visible;
   text-overflow: unset;
@@ -128,6 +156,10 @@
 .movie p {
   color: #555;
   margin: 5px 0;
+}
+
+.dark-mode .movie p {
+  color: #dddddd;
 }
 
 .movie .ratings {
@@ -215,4 +247,8 @@ ul li img {
 .pagination-numbers button.active {
   font-weight: bold;
   text-decoration: none;
+}
+
+.dark-mode .pagination-numbers button {
+  color: #ffffff;
 }

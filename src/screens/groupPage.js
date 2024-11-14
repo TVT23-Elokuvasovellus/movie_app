@@ -8,7 +8,7 @@ function GroupPage({ currentUserId }) {
   const [message, setMessage] = useState("");
   const [message2, setMessage2] = useState("");
   const navigate = useNavigate();
-  console.log("gr_id:", groupId);
+
   useEffect(() => {
     const fetchGroup = async () => {
       try {
