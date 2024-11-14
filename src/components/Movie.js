@@ -14,8 +14,8 @@ const Movie = ({ show }) => {
         <div className="movie">
             <img src={show.Images?.EventSmallImagePortrait} alt="Event Image" />
             <h2>{show.Title}</h2>
-            <p>näytösaika: {formatTime(show.dttmShowStart)} - {formatTime(show.dttmShowEnd)}, {formatDate(show.dttmShowStart)}</p>
-            <p>kesto: {show.LengthInMinutes} minuuttia</p>
+            <p><strong>Näytösaika: </strong>{formatTime(show.dttmShowStart)} - {formatTime(show.dttmShowEnd)}, {formatDate(show.dttmShowStart)}</p>
+            <p><strong>Kesto: </strong>{show.LengthInMinutes} minuuttia</p>
             <p>{show.TheatreAndAuditorium}</p>
             <p>{show.Genres}</p>
             <div className="ratings">

@@ -1,1 +1,24 @@
-
+/* Global Styles for Light Mode */
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: white; /* Light mode background */
+    color: black;
+  }
+  
+  .dark-mode body, .dark-mode html {
+    background-color: black; /* Dark mode background */
+    color: white;
+  }
+  
+  /* Ensure any containers are also styled */
+  .root-container {
+    border: none;
+  }
+  
+  /* Add dark-mode specific styles here as needed */
+  .dark-mode .root-container {
+    background-color: black;
+    border: none;
+  }
+  
