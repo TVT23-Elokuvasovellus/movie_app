@@ -1,12 +1,18 @@
 import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import GroupCreator from "./components/groupCreator";
+import GroupPage from "./screens/groupPage";
+
 
 function App() {
   return (
-    <div className="">
-      <header className="">
-        <h3>TESTI</h3>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<GroupCreator />} />
+        <Route path="/group/:id" element={<GroupPage  />} />
+      </Routes>
+    </Router>
   );
 }
 
