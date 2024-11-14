@@ -2,7 +2,7 @@ import './Home.css';
 import CinemaSchedule from '../components/CinemaSchedule';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
+import GroupCreator from '../components/groupCreator';
 function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -19,6 +19,7 @@ function Home() {
       <button className="dark-mode-button" onClick={toggleDarkMode}>
         {isDarkMode ? 'Light Mode' : 'Dark Mode'}
       </button>
+      <GroupCreator/>
       <CinemaSchedule />
     </div>
   );

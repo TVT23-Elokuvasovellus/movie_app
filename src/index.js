@@ -7,6 +7,7 @@ import Authentication from './screens/Authentication';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import GroupPage from './screens/groupPage';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -26,11 +27,15 @@ const App = () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />
+    element: <Home />,
   },
   {
     path: "/login",
     element: <Authentication />
+  },
+  {
+    path: "/group/:id", 
+    element: <GroupPage />
   },
   {
     path: "*",
