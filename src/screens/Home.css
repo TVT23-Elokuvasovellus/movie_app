@@ -1,33 +1,19 @@
-/* Home.css */
 .home {
-    background-color: white;
-    color: black;
-    /* Other styles */
-  }
-  
-  .dark-mode .home {
-    background-color: black;
-    color: white;
-  }
-  
-  /* Styles for other components */
-  .cinema-schedule {
-    /* Existing styles */
-  }
-  
-  .dark-mode .cinema-schedule {
-    /* Dark mode styles for CinemaSchedule */
-  }
-  
-  /* Styles for buttons */
-  .login-button, .dark-mode-button {
-    margin: 10px;
-    padding: 10px;
-    /* Other button styles */
-  }
-  
-  .dark-mode .login-button, .dark-mode .dark-mode-button {
-    background-color: #333;
-    color: white;
-  }
-  
+  background-color: white;
+  color: black;
+}
+
+.dark-mode .home {
+  background-color: black;
+  color: white;
+}
+
+.login-button, .dark-mode-button {
+  margin: 10px;
+  padding: 10px;
+}
+
+.dark-mode .login-button, .dark-mode .dark-mode-button {
+  background-color: #333;
+  color: white;
+}

@@ -1,13 +1,40 @@
 #group {
-    border: 2px solid #636363;
-    border-radius: 8px;
-    width: auto; 
-    max-width: 250px;
-    padding: 10px; 
-    text-align: center; 
-    background-color: #f9f9f9;  
-  }
-  #groupLinks {
-    text-align: center;
-    font-size: large;
-  }
+  border: 2px solid #636363;
+  border-radius: 8px;
+  width: auto;
+  max-width: 250px;
+  padding: 10px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.dark-mode #group {
+  border: 2px solid #ffffff;
+  background-color: #333333;
+}
+
+#groupLinks {
+  text-align: center;
+  font-size: large;
+}
+
+.dark-mode #groupLinks {
+  color: #ffffff;
+}
+
+#groupLinks a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+#groupLinks a:hover {
+  text-decoration: underline;
+}
+
+.dark-mode #groupLinks a {
+  color: #00d9ff;
+}
+
+.dark-mode #groupLinks a:hover {
+  text-decoration: underline;
+}

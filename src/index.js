@@ -1,4 +1,3 @@
-// index.js or main component
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import ErrorPage from './screens/ErrorPage';
