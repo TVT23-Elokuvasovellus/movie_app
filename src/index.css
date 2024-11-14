@@ -1,24 +1,39 @@
 /* Global Styles for Light Mode */
 body, html {
-    margin: 0;
-    padding: 0;
-    background-color: white; /* Light mode background */
-    color: black;
-  }
-  
-  .dark-mode body, .dark-mode html {
-    background-color: black; /* Dark mode background */
-    color: white;
-  }
-  
-  /* Ensure any containers are also styled */
-  .root-container {
-    border: none;
-  }
-  
-  /* Add dark-mode specific styles here as needed */
-  .dark-mode .root-container {
-    background-color: black;
-    border: none;
-  }
-  
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  color: black;
+}
+
+/* Global Styles for Dark Mode */
+body.dark-mode, html.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+.root-container {
+  border: none;
+}
+
+.root-container.dark-mode {
+  background-color: black;
+  border: none;
+}
+
+body a, body a:visited {
+  color: #007bff;
+  text-decoration: none;
+}
+
+body a:hover {
+  text-decoration: underline;
+}
+
+body.dark-mode a, body.dark-mode a:visited {
+  color: #00d9ff;
+}
+
+body.dark-mode a:hover {
+  text-decoration: underline;
+}

@@ -1,3 +1,5 @@
+import './groupPage.css';
+
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate  } from "react-router-dom";
 
@@ -57,7 +59,7 @@ function GroupPage({ currentUserId }) {
     
   }
   return (
-    <div>
+    <div className="group-page">
       <Link to="/">Back to Home</Link>
       <h2>Group: {groupName}</h2>
       <button onClick={deleteGroup}>Delete Group</button>
