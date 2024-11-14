@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import GroupPage from './screens/groupPage';
-import GroupCreator from './components/groupCreator';
+
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 

@@ -55,7 +55,7 @@ router.get('/', (req, res) => {
 
     try {
       const groupResult = await pool.query(
-        'SELECT * FROM "Groups" WHERE gr_id = $1 AND (owner = $2 OR EXISTS (SELECT 1 FROM "Members" WHERE gr_id = $1))',//AND ac_id = $2
+        'SELECT * FROM "Groups" WHERE gr_id = $1 AND (owner = $2 OR EXISTS (SELECT 1 FROM "Members" WHERE "group" = $1))',//AND ac_id = $2
         [gr_id, ac_id]
       );
   
