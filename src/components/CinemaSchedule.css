@@ -1,0 +1,254 @@
+/* Container Styles */
+.container {
+  border: 2px solid #636363;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 800px;
+}
+
+.dark-mode .container {
+  border: 2px solid #ffffff;
+  background-color: #333333;
+}
+
+/* Dropdown Container Styles */
+.dropdown-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: none;
+  border: none;
+}
+
+.dark-mode .dropdown-container {
+  background: #444444;
+}
+
+/* Movies Container Styles */
+.movies-container-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  flex-wrap: wrap;
+  overflow: hidden;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  margin-top: 0;
+  padding-top: 40px;
+  min-height: 600px;
+}
+
+.dark-mode .movies-container-wrapper {
+  background-color: #333333;
+}
+
+/* Movies Container */
+.movies-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  margin: 20px 0;
+  flex-grow: 1;
+  gap: 20px;
+}
+
+/* Pagination Button Styles */
+.pagination-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  background-color: #f9f9f9;
+  color: #636363;
+  border: 2px solid #636363;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 0 20px;
+  z-index: 5;
+}
+
+.pagination-button.left {
+  left: 0;
+}
+
+.pagination-button.right {
+  right: 0;
+}
+
+.pagination-button.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.dark-mode .pagination-button {
+  background-color: #444444;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+/* Movie Card Styles */
+.movie {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: calc(20% - 60px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 700px;
+}
+
+.dark-mode .movie {
+  border: 1px solid #444444;
+  background-color: #555555;
+}
+
+.movie img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 10px;
+}
+
+.movie h2 {
+  font-size: 1.2em;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease-in-out;
+}
+
+.dark-mode .movie h2 {
+  color: #ffffff;
+}
+
+.movie h2:hover {
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+}
+
+.movie p {
+  color: #555;
+  margin: 5px 0;
+}
+
+.dark-mode .movie p {
+  color: #dddddd;
+}
+
+.movie .ratings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+}
+
+ul li {
+  display: inline-block;
+}
+
+ul li img {
+  max-width: 30px;
+  height: 30px;
+}
+
+.movie .ratings img {
+  height: 30px;
+  margin: 0 5px;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .movie {
+    width: calc(25% - 60px);
+  }
+}
+
+@media (max-width: 992px) {
+  .movie {
+    width: calc(33.33% - 60px);
+  }
+}
+
+@media (max-width: 768px) {
+  .movie {
+    width: calc(50% - 60px);
+  }
+}
+
+@media (max-width: 576px) {
+  .movie {
+    width: calc(100% - 60px);
+    height: auto;
+  }
+
+  .movies-container {
+    flex-direction: column;
+  }
+
+  .pagination {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pagination-button.left,
+  .pagination-button.right {
+    position: static;
+    transform: none;
+    margin: 10px;
+  }
+}
+
+/* Pagination Number Styles */
+.pagination-numbers button {
+  background: none;
+  border: none;
+  color: #000000;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px;
+  text-decoration: underline;
+}
+
+.pagination-numbers button.active {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.dark-mode .pagination-numbers button {
+  color: #ffffff;
+}
