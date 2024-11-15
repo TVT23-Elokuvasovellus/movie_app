@@ -1,13 +1,14 @@
-import './App.css';
+import './search.css';
 import React, { useState, useEffect } from 'react';
 
-function App() {
+function Search() {
     const [search, setSearch] = useState('');
     const [results, setResults] = useState([]);
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState('');
     const [selectedSort, setSelectedSort] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
+    const [currentSearch, setCurrentSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
@@ -57,6 +58,7 @@ function App() {
                 setResults(searchData.results);
                 setCurrentPage(searchData.page);
                 setTotalPages(searchData.total_pages);
+                setCurrentSearch('normal');
             })
             .catch(err => console.error(err));
     };
@@ -69,6 +71,7 @@ function App() {
             setResults(searchData.results);
             setCurrentPage(searchData.page);
             setTotalPages(searchData.total_pages);
+            setCurrentSearch('advanced');
         })
         .catch(err => console.error(err));
     }
@@ -78,7 +81,11 @@ function App() {
     }, []);
 
     const goToPage = (page) => {
-        performAdvancedSearch(page);
+        if (currentSearch === 'normal'){
+            performSearch(page)
+        } else {
+            performAdvancedSearch(page);
+        }
     };
 
     return (
@@ -135,7 +142,10 @@ function App() {
                         <img 
                             src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} 
                             alt={item.title} 
-                            onError={(e) => e.target.src = 'path/to/default-image.jpg'}
+                            onError={(e) => {
+                                e.target.onError = null;
+                                e.target.src = "img/default.JPG";
+                            }}
                         />
                     </div>
                 ))}
@@ -149,4 +159,4 @@ function App() {
     );
 }
 
-export default App;
+export default Search;

@@ -3,6 +3,7 @@ import CinemaSchedule from '../components/CinemaSchedule';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import GroupCreator from '../components/groupCreator';
+import Search from '../components/search';
 
 function Home() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -29,6 +30,7 @@ function Home() {
         {isDarkMode ? 'Light Mode' : 'Dark Mode'}
       </button>
       <GroupCreator />
+      <Search />
       <CinemaSchedule />
     </div>
   );
