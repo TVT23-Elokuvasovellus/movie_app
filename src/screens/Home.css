@@ -17,3 +17,7 @@
   background-color: #333;
   color: white;
 }
+
+.search-container, .cinema-schedule-container {
+  margin-bottom: 20px;
+}

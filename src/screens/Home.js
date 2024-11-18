@@ -30,8 +30,12 @@ function Home() {
         {isDarkMode ? 'Light Mode' : 'Dark Mode'}
       </button>
       <GroupCreator />
-      <Search />
-      <CinemaSchedule />
+      <div className="search-container">
+        <Search />
+      </div>
+      <div className="cinema-schedule-container">
+        <CinemaSchedule />
+      </div>
     </div>
   );
 }

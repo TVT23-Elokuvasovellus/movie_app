@@ -93,6 +93,10 @@ header label {
     text-align: center;
 }
 
+.dark-mode .result-card h2 { 
+    color: black;
+}
+
 .result-card:hover {
     transform: translateY(-10px);
 }
