@@ -2,6 +2,7 @@ import './groupPage.css';
 
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate  } from "react-router-dom";
+import Navbar from '../components/Navbar'
 
 function GroupPage({ currentUserId }) {
   const location = useLocation(); 
@@ -59,14 +60,15 @@ function GroupPage({ currentUserId }) {
     
   }
   return (
-    <div className="group-page">
-      <Link to="/">Back to Home</Link>
-      <h2>Group: {groupName}</h2>
-      <button onClick={deleteGroup}>Delete Group</button>
-      {message2 && <p>{message2}</p>}
+    <div>
+      <Navbar />
+      <div className="group-page">
+        <Link to="/">Back to Home</Link>
+        <h2>Group: {groupName}</h2>
+        <button onClick={deleteGroup}>Delete Group</button>
+        {message2 && <p>{message2}</p>}
+      </div>
     </div>
-
   );
-}
-
+};
 export default GroupPage;
