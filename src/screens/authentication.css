@@ -1,14 +1,21 @@
+.authentication-page {
+
+}
+
+.dark-mode .authentication-page {
+
+}
+
 .container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: auto;
-    margin-top: 50px;
-    padding-bottom: 30px;
 }
 
 .text{
-    font-size: 32px;
+    font-size: 2rem;
+    text-align: center;
 }
 
 .header{
@@ -17,63 +24,67 @@
     align-items: center;
     gap: 8px;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 1px;
 }
 
 .inputs{
-    margin-top: 55px;
+    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
 .input{
-    display:flex;
+    display: flex;
     align-items: center;
     margin: auto;
-    border-radius: 16px;
-    width: 480px;
-    height: 80px;
+    max-width: 480px;
+    height: 60px;
     background: #eaeaea;
-    border-radius: 8 px;
+    border-radius: 8px;
 }
 
 .input input{
-    height: 50px;
-    width: 400px;
+    height: 40px;
+    width: 100%;
     background: transparent;
     border: none;
     outline: none;
-    font-size: 16px;
+    font-size: 1rem;
+    margin-left: 20px;
 }
 
 .submit-container{
     display: flex;
-    margin: 52px auto;
+    justify-content: center;
+    margin: 5%;
 }
 
 .login-newAcc-btn{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 480px;
+    width: 100%;
+    max-width: 480px;
     height: 48px;
     color:white;
     background-color: grey;
     border-radius: 16px;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 700;
     cursor: pointer;
-    margin: 0 auto;
 }
 
 .signup{
     margin: auto;
     margin-top: 4px;
     color: black;
+    margin: 1%;
+    text-align: center;
 }
 
 .signup span{
     text-decoration: underline;
     cursor: pointer;
+    color:purple;
 }
