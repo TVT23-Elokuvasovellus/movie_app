@@ -1,6 +1,0 @@
-def aika_sek():
-    m=int(input('minuutit: '))
-    s = int(input('sekunnit: '))
-    return((m*60) +s)
-
-print(aika_sek())
