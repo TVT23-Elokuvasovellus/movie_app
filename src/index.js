@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import ErrorPage from './screens/ErrorPage';
 import Home from './screens/Home';
-import Authentication from './screens/Authentication';
+import Login from './screens/Login';
+import Signup from './screens/Signup';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Authentication />
+    element: <Login />
+  },
+  {
+    path: "/signup",
+    element: <Signup />
   },
   {
     path: "/group/:id", 

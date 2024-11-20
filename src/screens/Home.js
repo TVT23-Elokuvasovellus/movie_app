@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import GroupCreator from '../components/groupCreator';
 import Search from '../components/search';
+import { useAuth } from './Authentication';
 
 function Home() {
+  const { isLoggedIn } = useAuth();
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem('isDarkMode') === 'true';
   });
@@ -19,7 +21,7 @@ function Home() {
     <div>
       <Navbar />
       <div className="home">
-        <GroupCreator />
+        <GroupCreator isLoggedIn={isLoggedIn}/>
         <div className="search-container">
           <Search />
         </div>

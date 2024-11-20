@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import './groupCreator.css'
 
-function GroupCreator({ isAuthenticated }) {
+
+function GroupCreator({ isLoggedIn }) {
     const [groupName, setGroupName] = useState("");
     const [groups, setGroups] = useState([]);
     const [error, setError] = useState(null);
-    
+
     useEffect(() => {
       const fetchGroups = async () => {
         try {
@@ -48,7 +49,7 @@ function GroupCreator({ isAuthenticated }) {
         ))}
       </ul>
       
-      {isAuthenticated ? (
+      {isLoggedIn ? (
         <div>
           <h1>Create a Group</h1>
           <input

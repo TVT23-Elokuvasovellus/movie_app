@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate  } from "react-router-dom";
 import Navbar from '../components/Navbar'
 
+
 function GroupPage({ currentUserId }) {
   const location = useLocation(); 
   const groupName = location.state?.name 
@@ -11,6 +12,7 @@ function GroupPage({ currentUserId }) {
   const [message, setMessage] = useState("");
   const [message2, setMessage2] = useState("");
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchGroup = async () => {
