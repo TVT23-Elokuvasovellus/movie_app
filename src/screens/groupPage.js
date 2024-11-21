@@ -1,8 +1,8 @@
-import './groupPage.css';
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link, useNavigate  } from "react-router-dom";
-import Navbar from '../components/Navbar'
-
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import './GroupPage.css';
+import { useAuth } from '../hooks/useAuth';
 
 function GroupPage() {
   const location = useLocation(); 
@@ -11,11 +11,12 @@ function GroupPage() {
   const [message, setMessage] = useState("");
   const [message2, setMessage2] = useState("");
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     const fetchGroup = async () => {
       const currentUserId = localStorage.getItem('userId');
-      console.log("Current User ID: ", currentUserId) //test
+      console.log("Current User ID: ", currentUserId); //test
       try {
         const token = localStorage.getItem('authToken');
         console.log("Token:", token);
@@ -29,7 +30,7 @@ function GroupPage() {
         const data = await response.json();
 
         if (response.ok) {
-          setMessage("")
+          setMessage("");
         } else {
           setMessage(data.error || "Access denied.");
         }
@@ -54,7 +55,7 @@ function GroupPage() {
 
       if (response.ok) {
         setMessage2("Group deleted successfully");
-        navigate('/')
+        navigate('/');
       } else {
         setMessage2("Failed to delete group");
       }
@@ -70,7 +71,7 @@ function GroupPage() {
     </div>
   ) : (
     <div className="group-page">
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} />
       <div className="group-content">
         <h2>Group: {groupName}</h2>
         <button onClick={deleteGroup}>Delete Group</button>
@@ -79,4 +80,5 @@ function GroupPage() {
     </div>
   );
 }
+
 export default GroupPage;

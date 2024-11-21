@@ -21,6 +21,14 @@ body.dark-mode, html.dark-mode {
   border: none;
 }
 
+body, html, .root-container, .home {
+  background-color: inherit;
+}
+
+.main-content {
+  padding-top: 80px;
+}
+
 body a, body a:visited {
   color: #007bff;
   text-decoration: none;
@@ -36,4 +44,21 @@ body.dark-mode a, body.dark-mode a:visited {
 
 body.dark-mode a:hover {
   text-decoration: underline;
+}
+
+body.dark-mode .main-content {
+  background-color: black;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 60px;
+  }
+}
+
+@media (min-width: 769px) {
+  .main-content {
+    padding-top: 80px;
+  }
 }

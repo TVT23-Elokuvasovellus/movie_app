@@ -94,27 +94,3 @@ ALTER TABLE IF EXISTS public."Ratings"
     NOT VALID;
 
 END;
-
--- Insert test data
-INSERT INTO public."Accounts" (ac_id, email, password) VALUES
-(1, 'john.doe@example.com', 'password123'),
-(2, 'jane.smith@example.com', 'password456');
-
-INSERT INTO public."Favorites" (fa_id, ac_id, movie) VALUES
-(1, 1, 'Inception'),
-(2, 2, 'The Matrix');
-
-INSERT INTO public."Groups" (gr_id, owner, name) VALUES
-(1, 1, 'Film Critics'),
-(2, 2, 'Sci-Fi Fans');
-
-INSERT INTO public."Members" (me_id, "group", member) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 2, 2);
-
-INSERT INTO public."Ratings" (ra_id, movie, stars, text, "time", ac_id) VALUES
-(1, 'Inception', 5, 'Amazing movie!', '2024-11-14 21:39:00+02', 1),
-(2, 'The Matrix', 4, 'Very good.', '2024-11-14 21:40:00+02', 2);
-
-END;

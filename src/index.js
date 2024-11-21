@@ -1,51 +1,55 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import ErrorPage from './screens/ErrorPage';
-import Home from './screens/Home';
-import Login from './screens/Login';
-import Signup from './screens/Signup';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import GroupPage from './screens/groupPage';
+
+// Screens
+import ErrorPage from './screens/ErrorPage';
+import Home from './screens/HomePage';
+import Login from './screens/LoginPage';
+import Signup from './screens/SignupPage';
+import ProfilePage from './screens/ProfilePage';
+import GroupPage from './screens/GroupPage';
+import { useAuth } from './hooks/useAuth';
 
 const App = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.body.classList.toggle('dark-mode', !isDarkMode);
-  };
+  const { isLoggedIn } = useAuth();
+  const [isDarkMode] = useState(() => {
+    return localStorage.getItem('isDarkMode') === 'true';
+  });
 
   return (
     <div className={`root-container ${isDarkMode ? 'dark-mode' : ''}`}>
-      <RouterProvider router={router} />
+      <RouterProvider router={createBrowserRouter([
+        {
+          path: "/",
+          element: <Home isLoggedIn={isLoggedIn} />,
+        },
+        {
+          path: "/login",
+          element: <Login />
+        },
+        {
+          path: "/signup",
+          element: <Signup />
+        },
+        {
+          path: "/profile/:id", 
+          element: <ProfilePage isLoggedIn={isLoggedIn} />
+        },
+        {
+          path: "/group/:id", 
+          element: <GroupPage isLoggedIn={isLoggedIn} />
+        },
+        {
+          path: "*",
+          element: <ErrorPage />
+        }
+      ])} />
     </div>
   );
 };
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/login",
-    element: <Login />
-  },
-  {
-    path: "/signup",
-    element: <Signup />
-  },
-  {
-    path: "/group/:id", 
-    element: <GroupPage />
-  },
-  {
-    path: "*",
-    element: <ErrorPage />
-  }
-]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
