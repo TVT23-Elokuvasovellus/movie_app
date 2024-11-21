@@ -13,7 +13,7 @@ BEGIN;
 
 CREATE TABLE IF NOT EXISTS public."Accounts"
 (
-    ac_id integer NOT NULL,
+    ac_id SERIAL NOT NULL,
     email character varying(255) COLLATE pg_catalog."default" NOT NULL,
     password character varying(255) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "Accounts_pkey" PRIMARY KEY (ac_id)
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS public."Accounts"
 
 CREATE TABLE IF NOT EXISTS public."Favorites"
 (
-    fa_id integer NOT NULL,
+    fa_id SERIAL NOT NULL,
     ac_id integer NOT NULL,
     movie character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "Favorites_pkey" PRIMARY KEY (fa_id)
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS public."Favorites"
 
 CREATE TABLE IF NOT EXISTS public."Groups"
 (
-    gr_id integer NOT NULL,
+    gr_id SERIAL NOT NULL,
     owner integer NOT NULL,
     name character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "Groups_pkey" PRIMARY KEY (gr_id)
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS public."Groups"
 
 CREATE TABLE IF NOT EXISTS public."Members"
 (
-    me_id integer NOT NULL,
+    me_id SERIAL NOT NULL,
     "group" integer NOT NULL,
     member integer NOT NULL,
     CONSTRAINT "Members_pkey" PRIMARY KEY (me_id)
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS public."Members"
 
 CREATE TABLE IF NOT EXISTS public."Ratings"
 (
-    ra_id integer NOT NULL,
+    ra_id SERIAL NOT NULL,
     movie character varying COLLATE pg_catalog."default" NOT NULL,
     stars smallint NOT NULL DEFAULT 0,
     text character varying COLLATE pg_catalog."default",

@@ -2,13 +2,10 @@ import './Navbar.css';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn }) => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem('isDarkMode') === 'true';
   });
-
-  const [isOnline, setIsOnline] = useState(false);
-  const [username] = useState("testuser@mail.com");
 
   useEffect(() => {
     document.body.classList.toggle('dark-mode', isDarkMode);
@@ -20,11 +17,14 @@ const Navbar = () => {
     document.body.classList.toggle('dark-mode', newMode);
     localStorage.setItem('isDarkMode', newMode);
   };
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    window.location.reload();
+};
 
-  const toggleOnlineStatus = () => {
-    setIsOnline(!isOnline);
-  };
-
+  const username = localStorage.getItem('email');
+  console.log("Stored navbar email:", [username]); // debug
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -37,14 +37,12 @@ const Navbar = () => {
         <button className="dark-mode-button" onClick={toggleDarkMode}>
           {isDarkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
-        <Link to="#" onClick={toggleOnlineStatus} className="status-link">
-          {isOnline ? 'Go Offline' : 'Go Online'}
-        </Link>
+
       </div>
       <div className="navbar-right">
-        {isOnline ? (
+        {isLoggedIn ? (
           <span>
-            Logged in as: {username} <Link to="/logout">Log out</Link>
+            Logged in as: {username} <button onClick={handleLogout}>Logout</button>
           </span>
         ) : (
           <>

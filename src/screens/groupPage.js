@@ -1,10 +1,10 @@
 import './groupPage.css';
-
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate  } from "react-router-dom";
 import Navbar from '../components/Navbar'
 
-function GroupPage({ currentUserId }) {
+
+function GroupPage() {
   const location = useLocation(); 
   const groupName = location.state?.name 
   const groupId = location.state?.id;
@@ -14,8 +14,18 @@ function GroupPage({ currentUserId }) {
 
   useEffect(() => {
     const fetchGroup = async () => {
+      const currentUserId = localStorage.getItem('userId');
+      console.log("Current User ID: ", currentUserId) //test
       try {
-        const response = await fetch(`http://localhost:3001/group/${groupId}`);
+        const token = localStorage.getItem('authToken');
+        console.log("Token:", token);
+        const response = await fetch(`http://localhost:3001/group/${groupId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+          },
+        });
         const data = await response.json();
 
         if (response.ok) {
@@ -33,12 +43,13 @@ function GroupPage({ currentUserId }) {
 
   const deleteGroup = async () => {
     try {
+      const token = localStorage.getItem('authToken');
       const response = await fetch(`http://localhost:3001/delete/${groupId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
         },
-        body: JSON.stringify({ ac_id: currentUserId }), 
       });
 
       if (response.ok) {
@@ -51,24 +62,21 @@ function GroupPage({ currentUserId }) {
       setMessage2("Error: " + error.message);
     }
   };
-  if (message) {
-    return  <div>
+
+  return message ? (
+    <div>
       {message}
       <Link to="/">Back</Link>
     </div>
-          
-    
-  }
-  return (
-    <div>
+  ) : (
+    <div className="group-page">
       <Navbar />
-      <div className="group-page">
-        <Link to="/">Back to Home</Link>
+      <div className="group-content">
         <h2>Group: {groupName}</h2>
         <button onClick={deleteGroup}>Delete Group</button>
         {message2 && <p>{message2}</p>}
       </div>
     </div>
   );
-};
+}
 export default GroupPage;
