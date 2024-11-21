@@ -19,7 +19,7 @@ function Home() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn}/>
       <div className="home">
         <GroupCreator isLoggedIn={isLoggedIn}/>
         <div className="search-container">

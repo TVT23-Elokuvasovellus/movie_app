@@ -13,7 +13,7 @@ function GroupCreator({ isLoggedIn }) {
         try {
           const response = await fetch("http://localhost:3001/"); 
           const data = await response.json();
-          setGroups(data);
+          setGroups(Array.isArray(data) ? data : []);
         } catch (err) {
           setError("Error fetching groups: " + err.message);
         }
@@ -24,9 +24,13 @@ function GroupCreator({ isLoggedIn }) {
     const createGroup = async () => {
       if (groupName.trim()) {
         try {
+          const token = localStorage.getItem('authToken');
           const response = await fetch("http://localhost:3001/create", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+             },
             body: JSON.stringify({ name: groupName }),
           });
           const newGroup = await response.json();

@@ -1,7 +1,10 @@
 .group-page {
   
 }
-
+.group-content {
+    padding-top: 40px;
+    padding-left: 10px;
+}
 .dark-mode .group-page {
   
 }
