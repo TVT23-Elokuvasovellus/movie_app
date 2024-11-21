@@ -17,27 +17,29 @@ const Navbar = ({ isLoggedIn }) => {
     document.body.classList.toggle('dark-mode', newMode);
     localStorage.setItem('isDarkMode', newMode);
   };
+
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userId');
     window.location.reload();
-};
+  };
 
   const username = localStorage.getItem('email');
-  console.log("Stored navbar email:", [username]); // debug
+  const userId = localStorage.getItem('userId');
+  console.log("Stored navbar email:", username); // debug
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
         <Link to="/">
           <button className="nav-button">Home</button>
         </Link>
-        <Link to="/profile">
+        <Link to={`/profile/${userId}`}>
           <button className="nav-button">Profile</button>
         </Link>
         <button className="dark-mode-button" onClick={toggleDarkMode}>
           {isDarkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
-
       </div>
       <div className="navbar-right">
         {isLoggedIn ? (
@@ -56,4 +58,3 @@ const Navbar = ({ isLoggedIn }) => {
 };
 
 export default Navbar;
-

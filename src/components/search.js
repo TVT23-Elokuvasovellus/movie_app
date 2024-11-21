@@ -1,4 +1,4 @@
-import './search.css';
+import './Search.css';
 import React, { useState, useEffect } from 'react';
 
 function Search() {
@@ -17,7 +17,7 @@ function Search() {
         method: 'GET',
         headers: {
             accept: 'application/json'
-            // Authorization: `Bearer ${token}`
+            //Authorization: `Bearer ${token}`
         }
     };
 
@@ -110,6 +110,7 @@ function Search() {
 
     useEffect(() => {
         getGenres();
+        fetchPopularMovies();
     }, []);
 
     const goToPage = (page) => {
