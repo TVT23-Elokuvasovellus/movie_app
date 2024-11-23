@@ -8,9 +8,6 @@ DROP TABLE IF EXISTS public."Favorites" CASCADE;
 DROP TABLE IF EXISTS public."Accounts" CASCADE;
 
 -- Recreate tables
-BEGIN;
-
-
 CREATE TABLE IF NOT EXISTS public."Accounts"
 (
     ac_id SERIAL NOT NULL,
@@ -55,42 +52,38 @@ CREATE TABLE IF NOT EXISTS public."Ratings"
 );
 
 ALTER TABLE IF EXISTS public."Favorites"
-    ADD CONSTRAINT ac_id FOREIGN KEY (ac_id)
+    ADD CONSTRAINT favorites_ac_id FOREIGN KEY (ac_id)
     REFERENCES public."Accounts" (ac_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     NOT VALID;
-
 
 ALTER TABLE IF EXISTS public."Groups"
-    ADD CONSTRAINT ac_id FOREIGN KEY (owner)
+    ADD CONSTRAINT groups_ac_id FOREIGN KEY (owner)
     REFERENCES public."Accounts" (ac_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     NOT VALID;
 
-
 ALTER TABLE IF EXISTS public."Members"
-    ADD CONSTRAINT ac_id FOREIGN KEY (member)
+    ADD CONSTRAINT members_ac_id FOREIGN KEY (member)
     REFERENCES public."Accounts" (ac_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     NOT VALID;
 
-
 ALTER TABLE IF EXISTS public."Members"
-    ADD CONSTRAINT gr_id FOREIGN KEY ("group")
+    ADD CONSTRAINT members_gr_id FOREIGN KEY ("group")
     REFERENCES public."Groups" (gr_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     NOT VALID;
 
-
 ALTER TABLE IF EXISTS public."Ratings"
-    ADD CONSTRAINT ac_id FOREIGN KEY (ac_id)
+    ADD CONSTRAINT ratings_ac_id FOREIGN KEY (ac_id)
     REFERENCES public."Accounts" (ac_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     NOT VALID;
 
 END;
