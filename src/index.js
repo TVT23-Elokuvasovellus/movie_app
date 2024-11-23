@@ -14,7 +14,7 @@ import GroupPage from './screens/GroupPage';
 import { useAuth } from './hooks/useAuth';
 
 const App = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, userId } = useAuth();
   const [isDarkMode] = useState(() => {
     return localStorage.getItem('isDarkMode') === 'true';
   });
@@ -36,7 +36,7 @@ const App = () => {
         },
         {
           path: "/profile/:id", 
-          element: <ProfilePage isLoggedIn={isLoggedIn} />
+          element: <ProfilePage isLoggedIn={isLoggedIn} userId={userId} />
         },
         {
           path: "/group/:id", 

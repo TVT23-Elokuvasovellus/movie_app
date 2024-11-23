@@ -26,7 +26,6 @@ const Navbar = ({ isLoggedIn }) => {
 
   const username = localStorage.getItem('email');
   const userId = localStorage.getItem('userId');
-  console.log("Stored navbar email:", username); // debug
 
   return (
     <nav className="navbar">
