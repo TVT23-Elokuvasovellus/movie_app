@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS public."Members"
     me_id SERIAL NOT NULL,
     "group" integer NOT NULL,
     member integer NOT NULL,
+    is_pending boolean default true,
     CONSTRAINT "Members_pkey" PRIMARY KEY (me_id)
 );
 
