@@ -12,14 +12,11 @@ function GroupPage() {
   const [message2, setMessage2] = useState("");
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
-
+  const [pendingMembers, setPendingMembers] = useState([]);
   useEffect(() => {
     const fetchGroup = async () => {
-      const currentUserId = localStorage.getItem('userId');
-      console.log("Current User ID: ", currentUserId); //test
       try {
         const token = localStorage.getItem('authToken');
-        console.log("Token:", token);
         const response = await fetch(`http://localhost:3001/group/${groupId}`, {
           method: 'GET',
           headers: {
@@ -38,7 +35,25 @@ function GroupPage() {
         setMessage("Error: " + error.message);
       }
     };
-
+    const fetchPendingRequests = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        const response = await fetch(`http://localhost:3001/group/${groupId}/pending`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setPendingMembers(data.pendingMembers);
+        } else {
+          console.error(data.error || "Failed to fetch pending requests.");
+        }
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    };
+    fetchPendingRequests();
     fetchGroup();
   }, [groupId]);
 
@@ -64,10 +79,59 @@ function GroupPage() {
     }
   };
 
+  const sendGroupInvite = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`http://localhost:3001/invite/${groupId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        setMessage("Invite request sent successfully!");
+      } else {
+        const data = await response.json();
+        setMessage(data.error || "Failed to send invite request.");
+      }
+    } catch (error) {
+      setMessage("Error: " + error.message);
+    }
+  };
+
+  const respondGroupInvite = async (memberId, action) => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`http://localhost:3001/group/${groupId}/respond`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ memberId, action }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setMessage2(data.message);
+      } else {
+        const data = await response.json();
+        setMessage2(data.error);
+      }
+    } catch (error) {
+      setMessage2("Error: " + error.message);
+    }
+  };
+
   return message ? (
     <div>
       {message}
-      <Link to="/">Back</Link>
+      <div>
+        <Link to="/">Back to home</Link>
+      </div>
+      <h2>Group: {groupName}</h2>
+      <button onClick={() => sendGroupInvite(groupId)}>Request Invite</button>
     </div>
   ) : (
     <div className="group-page">
@@ -76,6 +140,22 @@ function GroupPage() {
         <h2>Group: {groupName}</h2>
         <button onClick={deleteGroup}>Delete Group</button>
         {message2 && <p>{message2}</p>}
+        {pendingMembers.length > 0 ? (
+        <div>
+        <h3>Pending Requests</h3>
+        <ul>
+          {pendingMembers.map((member) => (
+            <li key={member.member}>
+              User: {member.email}
+              <button onClick={() => respondGroupInvite(member.member, 'accept')}>+</button>
+              <button onClick={() => respondGroupInvite(member.member, 'reject')}>-</button>
+            </li>
+          ))}
+        </ul>
+        </div>
+          ) : (
+            <p>No pending requests.</p>
+          )}
       </div>
     </div>
   );
