@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import ErrorPage from './screens/ErrorPage';
 import Home from './screens/Home';
+import Review from './screens/Review';
 import Authentication from './screens/Authentication';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import GroupPage from './screens/groupPage';
+//import GroupPage from './screens/groupPage';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -34,11 +35,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/group/:id", 
-    element: <GroupPage />
+    element: ""
   },
   {
     path: "*",
     element: <ErrorPage />
+  },
+  {
+    path: "/movie/:id",
+    element: <Review />
   }
 ]);
 

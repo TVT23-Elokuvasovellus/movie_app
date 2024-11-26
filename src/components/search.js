@@ -1,5 +1,6 @@
 import './search.css';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Search() {
     const [search, setSearch] = useState('');
@@ -16,8 +17,8 @@ function Search() {
     const options = {
         method: 'GET',
         headers: {
-            accept: 'application/json'
-            // Authorization: `Bearer ${token}`
+            accept: 'application/json',
+            Authorization: `Bearer ${token}`
         }
     };
 
@@ -68,6 +69,7 @@ function Search() {
                 setResults(searchData.results || []);
                 setCurrentPage(searchData.page || 1);
                 setTotalPages(searchData.total_pages || 1);
+                console.log(searchData);
                 setCurrentSearch('normal');
             })
             .catch(err => {
@@ -161,8 +163,10 @@ function Search() {
             <div className="results">
                 {results?.map((item, index) => (
                     <div className="result-card" key={index}>
+                        <Link to={`/movie/:${item.id}`} state={{id: item.id}}>
                         <h2>{item.title}</h2>
                         <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} onError={(e) => { e.target.onError = null; e.target.src = "img/default.JPG"; }} />
+                        </Link>
                     </div>
                 ))}
             </div>

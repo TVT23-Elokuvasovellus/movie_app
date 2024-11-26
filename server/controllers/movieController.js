@@ -1,4 +1,4 @@
-import { insertReview, selectMovieReviewsById, deleteReview } from "../models/movie";
+import { insertReview, selectMovieReviewsById, removeReview } from "../models/movie.js";
 
 const postReview = async (req,res,next) => {
     try {
@@ -21,7 +21,7 @@ const getReview = async (req,res,next) => {
 const deleteReview = async (req,res,next) => {
     try {
         const movie = req.params.movie;
-        const result = await deleteReview(movie, req.body.account)
+        const result = await removeReview(movie, req.body.account)
     } catch(error) {
         return next(error)
     }

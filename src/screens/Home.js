@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import CinemaSchedule from '../components/CinemaSchedule';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import GroupCreator from '../components/groupCreator';
+//import GroupCreator from '../components/groupCreator';
 import Search from '../components/search';
 
 function Home() {
@@ -19,7 +19,7 @@ function Home() {
     <div>
       <Navbar />
       <div className="home">
-        <GroupCreator />
+        
         <div className="search-container">
           <Search />
         </div>
