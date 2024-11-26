@@ -163,7 +163,7 @@ function Search() {
             <div className="results">
                 {results?.map((item, index) => (
                     <div className="result-card" key={index}>
-                        <Link to={`/movie/:${item.id}`} state={{id: item.id}}>
+                        <Link to={`/movie/:${item.id}`} >
                         <h2>{item.title}</h2>
                         <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} onError={(e) => { e.target.onError = null; e.target.src = "img/default.JPG"; }} />
                         </Link>
