@@ -12,6 +12,7 @@ import Signup from './screens/SignupPage';
 import Review from './screens/Review';
 import ProfilePage from './screens/ProfilePage';
 import GroupPage from './screens/GroupPage';
+import MovieInfo from './screens/MovieInfoPage';
 import { useAuth } from './hooks/useAuth';
 
 const App = () => {
@@ -44,8 +45,8 @@ const App = () => {
           element: <GroupPage isLoggedIn={isLoggedIn} />
         },
         {
-          path: "movie/:id",
-          element: <Review/>
+          path: "/movie/:movieId",
+          element: <MovieInfo />
         },
         {
           path: "*",

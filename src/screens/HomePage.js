@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import CinemaSchedule from '../components/CinemaSchedule';
 import GroupCreator from '../components/GroupCreator';
 import Search from '../components/Search';
+import ReviewList from '../components/ReviewList';
 import { useAuth } from '../hooks/useAuth';
 import './HomePage.css';
 
@@ -30,6 +31,9 @@ function Home() {
             </div>
             <div className="cinema-schedule-container">
               <CinemaSchedule />
+            </div>
+            <div className="review-list-container">
+              <ReviewList />
             </div>
           </div>
         </div>
