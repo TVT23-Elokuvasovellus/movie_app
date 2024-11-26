@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS public."Favorites"
 (
     fa_id SERIAL NOT NULL,
     ac_id integer NOT NULL,
+    mo_id integer NOT NULL,
     movie character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "Favorites_pkey" PRIMARY KEY (fa_id)
 );
@@ -44,6 +45,7 @@ CREATE TABLE IF NOT EXISTS public."Members"
 CREATE TABLE IF NOT EXISTS public."Ratings"
 (
     ra_id SERIAL NOT NULL,
+    mo_id integer NOT NULL,
     movie character varying COLLATE pg_catalog."default" NOT NULL,
     stars smallint NOT NULL DEFAULT 0,
     text character varying COLLATE pg_catalog."default",

@@ -1,0 +1,9 @@
+.movie-title {
+    cursor: pointer;
+    color: #007BFF;
+}
+
+.dark-mode .movie-title{
+    cursor: pointer;
+    color: #00D9FF;
+}

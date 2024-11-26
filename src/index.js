@@ -45,7 +45,11 @@ const App = () => {
           element: <GroupPage isLoggedIn={isLoggedIn} />
         },
         {
-          path: "/movie/:movieId",
+          path: "movie/:id",
+          element: <Review/>
+        },
+        {
+          path: "/movieinfo/:movieId",
           element: <MovieInfo />
         },
         {

@@ -1,10 +1,10 @@
-
 import express from 'express';
 import cors from 'cors';
 import groupRouter from './routers/groupRouter.js';
 import AuthRouter from './routers/AuthRouter.js';
-import movieRouter from './routers/movieRouter.js'
+import movieRouter from './routers/movieRouter.js';
 import AccountDeletionRouter from './routers/AccountDeletionRouter.js';
+import ReviewRouter from './routers/ReviewRouter.js';
 
 const port = 3001;
 
@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', groupRouter);
 app.use('/', AuthRouter);
 app.use('/', AccountDeletionRouter);
+app.use('/', ReviewRouter);
 app.use('/movie', movieRouter)
 
 app.use((err, req, res, next) => {
