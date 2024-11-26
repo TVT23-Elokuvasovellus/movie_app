@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import Authentication from './screens/Authentication';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import reportWebVitals from './reportWebVitals';
-import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
@@ -48,6 +44,10 @@ const App = () => {
           element: <GroupPage isLoggedIn={isLoggedIn} />
         },
         {
+          path: "movie/:id",
+          element: <Review/>
+        },
+        {
           path: "*",
           element: <ErrorPage />
         }
@@ -55,29 +55,6 @@ const App = () => {
     </div>
   );
 };
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/login",
-    element: <Authentication />
-  },
-  {
-    path: "/group/:id", 
-    element: ""
-  },
-  {
-    path: "*",
-    element: <ErrorPage />
-  },
-  {
-    path: "/movie/:id",
-    element: <Review />
-  }
-]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
