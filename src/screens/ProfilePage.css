@@ -1,0 +1,38 @@
+.profile-page p {
+  color: red !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
+.dark-mode .profile-page {
+
+}
+
+.delete-account-btn,
+.confirm-delete-btn {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.delete-account-form .form-control {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.delete-account-form .form-group {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.profile-page-text {
+  color: red;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 2rem;
+}
