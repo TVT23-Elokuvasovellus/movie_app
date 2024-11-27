@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import GroupMembers from '../components/GroupMembers'
 import './GroupPage.css';
 import { useAuth } from '../hooks/useAuth';
 
@@ -140,18 +141,19 @@ function GroupPage() {
         <h2>Group: {groupName}</h2>
         <button onClick={deleteGroup}>Delete Group</button>
         {message2 && <p>{message2}</p>}
+        <GroupMembers groupId={groupId} /> {/* Add MembersList */}
+        <h3>Pending Requests</h3>
         {pendingMembers.length > 0 ? (
         <div>
-        <h3>Pending Requests</h3>
-        <ul>
-          {pendingMembers.map((member) => (
-            <li key={member.member}>
-              User: {member.email}
-              <button onClick={() => respondGroupInvite(member.member, 'accept')}>+</button>
-              <button onClick={() => respondGroupInvite(member.member, 'reject')}>-</button>
-            </li>
-          ))}
-        </ul>
+          <ul>
+            {pendingMembers.map((member) => (
+              <li key={member.member}>
+                User: {member.email}
+                <button onClick={() => respondGroupInvite(member.member, 'accept')}>+</button>
+                <button onClick={() => respondGroupInvite(member.member, 'reject')}>-</button>
+              </li>
+            ))}
+          </ul>
         </div>
           ) : (
             <p>No pending requests.</p>
