@@ -1,0 +1,14 @@
+.showtimes-page {
+    max-width: 1200px; /* Adjust the max width as needed */
+    height: 100vh; /* Makes the container take full viewport height */
+    margin: 0 auto; /* Centers the container horizontally */
+    padding: 20px; /* Adds some padding for better spacing */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .cinema-schedule-container {
+    flex: 1;
+  }
+  

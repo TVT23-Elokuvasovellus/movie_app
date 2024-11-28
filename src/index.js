@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
+// for Bootstrap's JS components:
+// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './index.css';
 
 // Screens
@@ -12,6 +15,7 @@ import Signup from './screens/SignupPage';
 import Review from './screens/Review';
 import ProfilePage from './screens/ProfilePage';
 import GroupPage from './screens/GroupPage';
+import Showtimes from './screens/ShowtimesPage'
 import MovieInfo from './screens/MovieInfoPage';
 import { useAuth } from './hooks/useAuth';
 
@@ -51,6 +55,10 @@ const App = () => {
         {
           path: "/movieinfo/:movieId",
           element: <MovieInfo />
+        },
+        {
+          path: "showtimes",
+          element: <Showtimes isLoggedIn={isLoggedIn} />
         },
         {
           path: "*",
