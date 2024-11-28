@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 800px;
+  min-height: 1000px;
 }
 
 .dark-mode .container {
@@ -20,24 +20,62 @@
   background-color: #333333;
 }
 
-/* Dropdown Container Styles */
-.dropdown-container {
+/* Left Dropdown Container Styles */
+.dropdown-container-left {
   position: absolute;
   top: 20px;
-  right: 20px;
+  left: 20px;
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 5px;
   z-index: 10;
   background: #f9f9f9;
   padding: 10px;
   border-radius: 8px;
   box-shadow: none;
   border: none;
+  width: 600px; /* Increased width to accommodate both dropdowns */
 }
 
-.dark-mode .dropdown-container {
+.dark-mode .dropdown-container-left {
   background: #444444;
 }
+
+/* Right Dropdown Container Styles */
+.dropdown-container-right {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 5px;
+  z-index: 10;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: none;
+  border: none;
+  width: 500px;
+  height: auto;
+}
+
+.dark-mode .dropdown-container-right {
+  background: #444444;
+}
+
+/* Share Button Styles */
+.select-group button {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.dark-mode .select-group button {
+  background-color: #444444;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+}
+
 
 /* Movies Container Styles */
 .movies-container-wrapper {
@@ -120,7 +158,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 700px;
+  height: 800px;
 }
 
 .dark-mode .movie {
@@ -135,12 +173,13 @@
 }
 
 .movie h2 {
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: #333;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: all 0.3s ease-in-out;
+  font-weight: bold;
 }
 
 .dark-mode .movie h2 {
@@ -251,4 +290,23 @@ ul li img {
 
 .dark-mode .pagination-numbers button {
   color: #ffffff;
+}
+
+/* Dropdown Container Styles */
+.dropdown-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: none;
+  border: none;
+}
+
+.dark-mode .dropdown-container {
+  background: #444444;
 }

@@ -36,6 +36,9 @@ const Navbar = ({ isLoggedIn }) => {
         <Link to={`/profile/${userId}`}>
           <button className="nav-button">Profile</button>
         </Link>
+        <Link to="/showtimes">
+          <button className="nav-button">Showtimes</button>
+        </Link>
         <button className="dark-mode-button" onClick={toggleDarkMode}>
           {isDarkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
