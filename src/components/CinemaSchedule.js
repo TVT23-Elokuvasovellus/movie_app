@@ -1,17 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { fetchSchedule } from './FinnkinoApi.js';
-import Movie from "./Movie.js";
+import Movie from './Movie.js';
+import FetchGroups from './FetchGroups.js';
+import ConfirmShare from './ConfirmShare.js';
 import './CinemaSchedule.css';
 
 function CinemaSchedule() {
   const [shows, setShows] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [theatres, setTheatres] = useState([
-    // List of theatres
+    { ID: '1014', Name: 'Pääkaupunkiseutu' },
+    { ID: '1012', Name: 'Espoo' },
+    { ID: '1039', Name: 'Espoo: OMENA' },
+    { ID: '1038', Name: 'Espoo: SELLO' },
+    { ID: '1002', Name: 'Helsinki' },
+    { ID: '1045', Name: 'Helsinki: ITIS' },
+    { ID: '1031', Name: 'Helsinki: KINOPALATSI' },
+    { ID: '1032', Name: 'Helsinki: MAXIM' },
+    { ID: '1033', Name: 'Helsinki: TENNISPALATSI' },
+    { ID: '1013', Name: 'Vantaa: FLAMINGO' },
+    { ID: '1015', Name: 'Jyväskylä: FANTASIA' },
+    { ID: '1016', Name: 'Kuopio: SCALA' },
+    { ID: '1017', Name: 'Lahti: KUVAPALATSI' },
+    { ID: '1041', Name: 'Lappeenranta: STRAND' },
+    { ID: '1018', Name: 'Oulu: PLAZA' },
+    { ID: '1019', Name: 'Pori: PROMENADI' },
+    { ID: '1021', Name: 'Tampere' },
+    { ID: '1034', Name: 'Tampere: CINE ATLAS' },
+    { ID: '1035', Name: 'Tampere: PLEVNA' },
+    { ID: '1047', Name: 'Turku ja Raisio' },
+    { ID: '1022', Name: 'Turku: KINOPALATSI' },
+    { ID: '1046', Name: 'Raisio: LUXE MYLLY' },
   ]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedDay, setSelectedDay] = useState('today');
   const [selectedTheatre, setSelectedTheatre] = useState('1014');
-  const [selectedMovies, setSelectedMovies] = useState([]);
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+
   const showsPerPage = 5;
 
   useEffect(() => {
@@ -35,6 +62,19 @@ function CinemaSchedule() {
     fetchData();
   }, [selectedDay, selectedTheatre]);
 
+  useEffect(() => {
+    const fetchGroupData = async () => {
+      try {
+        const groupsData = await FetchGroups();
+        setGroups(groupsData);
+      } catch (error) {
+        console.error('Error fetching groups:', error);
+      }
+    };
+
+    fetchGroupData();
+  }, []);
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleDayChange = (event) => {
@@ -47,18 +87,35 @@ function CinemaSchedule() {
     setCurrentPage(1);
   };
 
-  const handleSelectMovie = (movie, isChecked) => {
-    setSelectedMovies(prevSelectedMovies => 
-      isChecked 
-      ? [...prevSelectedMovies, movie] 
-      : prevSelectedMovies.filter(m => m.timestamp !== movie.timestamp)
-    );
+  const handleSelectMovie = (id) => {
+    setSelectedMovieId(id);
+  };
+
+  const handleGroupChange = (event) => {
+    setSelectedGroup(event.target.value);
+  };
+
+  const handleShare = () => {
+    setModalVisible(true);
+  };
+
+  const handleConfirmShare = () => {
+    console.log(`Sharing ${selectedMovieId} on ${selectedGroup}`);
+    setSelectedMovieId(null);
+    setModalVisible(false);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedMovieId(null);
+    setModalVisible(false);
   };
 
   const indexOfLastShow = currentPage * showsPerPage;
   const indexOfFirstShow = indexOfLastShow - showsPerPage;
   const currentShows = shows.slice(indexOfFirstShow, indexOfLastShow);
   const totalPages = Math.ceil(shows.length / showsPerPage);
+
+  const selectedMovie = shows.find(show => show.ID === selectedMovieId);
 
   return (
     <div className="container">
@@ -82,12 +139,14 @@ function CinemaSchedule() {
       </div>
       <div className="dropdown-container-right">
         <div className="select-group">
-          <select>
-            <option value="group1">Group 1</option>
-            <option value="group2">Group 2</option>
-            <option value="group3">Group 3</option>
+          <select value={selectedGroup} onChange={handleGroupChange}>
+            {groups.map(group => (
+              <option key={group.ID} value={group.ID}>
+                {group.Name}
+              </option>
+            ))}
           </select>
-          <button>Share Selected</button>
+          <button onClick={handleShare}>Share Selected</button>
         </div>
       </div>
       <div className="movies-container-wrapper">
@@ -102,10 +161,10 @@ function CinemaSchedule() {
         <div className="movies-container">
           {currentShows.map((show, index) => (
             <Movie
-              key={index}
+              key={`${show.ID}-${index}`}
               show={show}
               onSelectMovie={handleSelectMovie}
-              selectedMovies={selectedMovies}
+              selectedMovieId={selectedMovieId}
             />
           ))}
         </div>
@@ -130,16 +189,15 @@ function CinemaSchedule() {
           </button>
         ))}
       </div>
+      <ConfirmShare
+        show={modalVisible}
+        handleClose={handleCloseModal}
+        handleConfirm={handleConfirmShare}
+        movieTitle={selectedMovie?.Title || ''}
+        groupName={groups.find(group => group.ID === selectedGroup)?.Name || ''}
+      />
     </div>
   );  
 }
-
-const Dropdown = ({ value, onChange, options }) => (
-  <select value={value} onChange={onChange} aria-label="Dropdown">
-    {options.map(option => (
-      <option key={option.value} value={option.value}>{option.label}</option>
-    ))}
-  </select>
-);
 
 export default CinemaSchedule;
