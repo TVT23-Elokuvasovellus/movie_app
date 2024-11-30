@@ -60,6 +60,12 @@
   color: #ffffff;
 }
 
+/* Disabled Button Styles */
+.disabled-button {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
 /* Movies Container Styles */
 .movies-container-wrapper {
   display: flex;
@@ -200,14 +206,14 @@
 .movie .ratings .age-rating {
   display: flex;
   align-items: flex-end;
-  height: 30px; 
+  height: 30px;
   margin-bottom: 15px;
 }
 
 .movie .ratings .content-ratings {
   display: flex;
   align-items: center;
-  height: 30px; 
+  height: 30px;
 }
 
 .movie .ratings .age-rating img,
@@ -220,13 +226,13 @@
   list-style: none;
   padding: 0;
   display: flex;
-  align-items: center; 
+  align-items: center;
   gap: 10px;
 }
 
 .movie .ratings ul li {
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
 
 .movie .ratings ul li img {

@@ -1,6 +1,7 @@
 import './Search.css';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Search() {
     const [search, setSearch] = useState('');
@@ -13,6 +14,7 @@ function Search() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const token = process.env.REACT_APP_API_TOKEN;
+    const navigate = useNavigate();
 
     const options = {
         method: 'GET',
@@ -55,7 +57,7 @@ function Search() {
     };
 
     const performSearch = (page = 1) => {
-        const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${token}&query=${search}&include_adult=false&language=en-US&page=${page}`;
+        const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${token}&query=${search}&include_adult=false&language=en-US&page=${page}&per_page=10`;
         console.log(`Performing search with URL: ${searchUrl}`);
 
         fetch(searchUrl, options)
@@ -66,9 +68,9 @@ function Search() {
                 return res.json();
             })
             .then(searchData => {
-                setResults(searchData.results || []);
+                setResults(searchData.results.slice(0, 10) || []);
                 setCurrentPage(searchData.page || 1);
-                setTotalPages(searchData.total_pages || 1);
+                setTotalPages(Math.ceil(searchData.total_results / 10) || 1);
                 console.log(searchData);
                 setCurrentSearch('normal');
             })
@@ -79,39 +81,45 @@ function Search() {
     };
 
     const performAdvancedSearch = (page = 1) => {
-        const searchUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${token}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${selectedSort}&with_genres=${selectedGenre}&year=${selectedYear}`;
+        const searchUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${token}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${selectedSort}&with_genres=${selectedGenre}&year=${selectedYear}&per_page=10`;
         console.log(`Performing advanced search with URL: ${searchUrl}`);
 
         fetch(searchUrl, options)
             .then(res => res.json())
             .then(searchData => {
-                const fetchedResults = searchData.results || [];
+                const fetchedResults = searchData.results.slice(0, 10) || [];
                 setResults(fetchedResults);
                 setCurrentPage(searchData.page || 1);
-                setTotalPages(searchData.total_pages || 1);
+                setTotalPages(Math.ceil(searchData.total_results / 10) || 1);
                 setCurrentSearch('advanced');
             })
             .catch(err => console.error(err));
     };
 
     const fetchPopularMovies = (page = 1) => {
-        const popularMoviesUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${token}&language=en-US&page=${page}`;
+        const popularMoviesUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${token}&language=en-US&page=${page}&per_page=10`;
         console.log(`Fetching popular movies with URL: ${popularMoviesUrl}`);
 
         fetch(popularMoviesUrl, options)
             .then(res => res.json())
             .then(searchData => {
-                const fetchedResults = searchData.results || [];
+                const fetchedResults = searchData.results.slice(0, 10) || [];
                 setResults(fetchedResults);
                 setCurrentPage(searchData.page || 1);
-                setTotalPages(searchData.total_pages || 1);
+                setTotalPages(Math.ceil(searchData.total_results / 10) || 1);
                 setCurrentSearch('popular');
             })
             .catch(err => console.error('Popular Movies API error:', err));
     };
 
+    const handleAddFavourite = (movie) => {
+        console.log(`Adding ${movie.title} to favourites`);
+        // Your logic to handle adding the movie to favourites
+    };
+
     useEffect(() => {
         getGenres();
+        fetchPopularMovies();
     }, []);
 
     const goToPage = (page) => {
@@ -128,10 +136,10 @@ function Search() {
         <div className="container">
             <header>
                 <div className='search-bar'>
-                    <input type="text" id="searchInput" value={search} onChange={updateSearch} placeholder="Type to search..." />
-                    <button onClick={() => performSearch(1)}>Search</button>
+                    <input type="text" id="searchInput" value={search} onChange={updateSearch} placeholder="Elokuvan nimi..." />
+                    <button onClick={() => performSearch(1)}>Hae hakusanalla</button>
                 </div>
-                <label htmlFor="sortBy">Sort by: </label>
+                <label htmlFor="sortBy">Järjestä: </label>
                 <select id="sortBy" name="sortBy" value={selectedSort} onChange={handleSortChange}>
                     <option value=""></option>
                     <option value="original_title.asc">Original Title (A-Z)</option>
@@ -154,26 +162,24 @@ function Search() {
                         <option key={index} value={item.id}>{item.name}</option>
                     ))}
                 </select>
-                <label htmlFor='searchYear'>Year: </label>
+                <label htmlFor='searchYear'>Vuosi: </label>
                 <input type="number" id="searchYear" value={selectedYear} onChange={handleYearChange} placeholder="2024" />
-                <button onClick={() => performAdvancedSearch(1)}>Advanced Search</button>
-                <button onClick={() => fetchPopularMovies(1)}>Popular Movies</button>
+                <button onClick={() => performAdvancedSearch(1)}>Hae rajauksilla</button>
+                <button onClick={() => fetchPopularMovies(1)}>Suosittuja elokuvia</button>
             </header>
-            <h1>Results</h1>
             <div className="results">
                 {results?.map((item, index) => (
                     <div className="result-card" key={index}>
-                        <Link to={`/movie/:${item.id}`} >
-                        <h2>{item.title}</h2>
-                        <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} onError={(e) => { e.target.onError = null; e.target.src = "img/default.JPG"; }} />
-                        </Link>
+                        <h2 onClick={() => navigate(`/movie/${item.id}`)}>{item.title}</h2>
+                        <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} onError={(e) => { e.target.onError = null; e.target.src = "./default.JPG"; }} />
+                        <button className="add-favourite-button" onClick={() => handleAddFavourite(item)}>Lisää suosikkilistalleni</button>
                     </div>
                 ))}
             </div>
             <div className="pagination">
-                <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-                <span>Page {currentPage} of {totalPages}</span>
-                <button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
+                <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>Edellinen</button>
+                <span>Sivu {currentPage} / {totalPages}</span>
+                <button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages}>Seuraava</button>
             </div>
         </div>
     );

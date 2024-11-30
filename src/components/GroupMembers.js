@@ -1,74 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-function GroupMembers({ groupId }) {
-  const [members, setMembers] = useState([]);
-  const [message, setMessage] = useState("");
+const Movie = ({ show, onSelectMovie, selectedMovieId }) => {
+  const isChecked = selectedMovieId === show.ID;
 
-  useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/group/${groupId}/members`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-          },
-        });
-    
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-    
-        const data = await response.json();
-        setMembers(data.members);
-      } catch (error) {
-        console.error("Error:", error.message);
-        setMessage("Failed to load members.");
-      }
-    };
-    fetchMembers();
-  }, [groupId]);
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('fi-FI');
+  };
 
-  const deleteMember = async (memberId) => {
-    try {
-      const token = localStorage.getItem('authToken');
-      const response = await fetch(`http://localhost:3001/group/${groupId}/member/${memberId}`, {
-        method: 'DELETE',
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+  const formatTime = (dateString) => {
+    const options = { hour: '2-digit', minute: '2-digit' };
+    return new Date(dateString).toLocaleTimeString([], options).replace(':', '.');
+  };
 
-      if (response.ok) {
-        setMessage("Member removed successfully.");
-        setMembers(members.filter((member) => member.member_id !== memberId));
-      } else {
-        const data = await response.json();
-        setMessage(data.error || "Failed to remove member.");
-      }
-    } catch (error) {
-      setMessage("Error: " + error.message);
-    }
+  const handleCheck = () => {
+    onSelectMovie(isChecked ? null : show.ID);
   };
 
   return (
-    <div>
-      <h3>Members</h3>
-      {message && <p>{message}</p>}
-      {members.length > 0 ? (
-        <ul>
-          {members.map((member) => (
-            <li key={member.member_id}>
-              <div>Email: {member.email}
-              <button onClick={() => deleteMember(member.member_id)}>Remove Member</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No members in this group.</p>
-      )}
+    <div className="movie">
+      <input 
+        type="checkbox" 
+        checked={isChecked} 
+        onChange={handleCheck} 
+        className="movie-checkbox"
+      />
+      <img
+        src={show.Images?.EventSmallImagePortrait}
+        alt="Event Image"
+        className="movie-img"
+        onClick={handleCheck}
+      />
+      <h2>{show.Title}</h2>
+      <p><strong>Näytösaika: </strong>{formatTime(show.dttmShowStart)} - {formatTime(show.dttmShowEnd)}, {formatDate(show.dttmShowStart)}</p>
+      <p><strong>Kesto: </strong>{show.LengthInMinutes} minuuttia</p>
+      <p>{show.TheatreAndAuditorium}</p>
+      <p>{show.Genres}</p>
+      <div className="ratings">
+        <div className="ratings-container">
+          <div className="age-rating">
+            <img src={show.RatingImageUrl} alt="Age Rating" />
+          </div>
+          <ul className="content-ratings">
+            {show.ContentDescriptors && show.ContentDescriptors.map((descriptor, index) => (
+              <li key={index}><img src={descriptor.ImageURL} alt={descriptor.Name} /></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <p><strong>Puhuttu kieli:</strong> {show.SpokenLanguage?.Name || 'N/A'}</p>
+      <p><strong>Tekstitykset:</strong> {show.SubtitleLanguage1?.Name || 'N/A'}, {show.SubtitleLanguage2?.Name || 'N/A'}</p>
+      <p>{show.PresentationMethod}</p>
     </div>
   );
-}
+};
 
-export default GroupMembers;
+export default Movie;
