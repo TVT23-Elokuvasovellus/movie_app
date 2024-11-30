@@ -15,6 +15,7 @@ import Signup from './screens/SignupPage';
 import Review from './screens/Review';
 import ProfilePage from './screens/ProfilePage';
 import GroupPage from './screens/GroupPage';
+import GroupsPage from './screens/GroupsPage';
 import Showtimes from './screens/ShowtimesPage'
 import MovieInfo from './screens/MovieInfoPage';
 import { useAuth } from './hooks/useAuth';
@@ -59,6 +60,10 @@ const App = () => {
         {
           path: "showtimes",
           element: <Showtimes isLoggedIn={isLoggedIn} />
+        },
+        {
+          path: "groups",
+          element: <GroupsPage />
         },
         {
           path: "*",

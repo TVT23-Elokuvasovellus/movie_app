@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchSchedule } from './FinnkinoApi.js';
 import Movie from './Movie.js';
 import FetchGroups from './FetchGroups.js';
 import ConfirmShare from './ConfirmShare.js';
 import './CinemaSchedule.css';
+
 
 function CinemaSchedule() {
   const [shows, setShows] = useState([]);
@@ -37,9 +39,11 @@ function CinemaSchedule() {
   const [selectedTheatre, setSelectedTheatre] = useState('1014');
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState('');
+  const [selectedGroupName, setSelectedGroupName] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
   const showsPerPage = 5;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -93,16 +97,31 @@ function CinemaSchedule() {
 
   const handleGroupChange = (event) => {
     setSelectedGroup(event.target.value);
+    const group = groups.find(group => group.ID === event.target.value);
+    setSelectedGroupName(group ? group.Name : '');
   };
 
   const handleShare = () => {
     setModalVisible(true);
   };
 
-  const handleConfirmShare = () => {
-    console.log(`Sharing ${selectedMovieId} on ${selectedGroup}`);
-    setSelectedMovieId(null);
-    setModalVisible(false);
+  const handleConfirmShare = async () => {
+    if (selectedMovieId && selectedGroup) {
+      const selectedMovie = shows.find(show => show.ID === selectedMovieId);
+      const postData = [
+        {
+          title: selectedMovie.Title,
+          time: selectedMovie.dttmShowStart,
+          date: new Date(selectedMovie.dttmShowStart).toLocaleDateString('fi-FI'),
+          location: selectedMovie.TheatreAndAuditorium,
+        },
+      ];
+
+      navigate(`/group/${selectedGroup}`, { state: { id: selectedGroup, name: selectedGroupName, sharedMovie: postData[0] } });
+
+      setSelectedMovieId(null);
+      setModalVisible(false);
+    }
   };
 
   const handleCloseModal = () => {
@@ -146,7 +165,13 @@ function CinemaSchedule() {
               </option>
             ))}
           </select>
-          <button onClick={handleShare}>Share Selected</button>
+          <button 
+            onClick={handleShare} 
+            disabled={!selectedMovieId || !selectedGroup} 
+            className={!selectedMovieId || !selectedGroup ? 'disabled-button' : ''}
+          >
+            Share Selected
+          </button>
         </div>
       </div>
       <div className="movies-container-wrapper">
