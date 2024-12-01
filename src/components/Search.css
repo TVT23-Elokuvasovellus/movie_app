@@ -25,34 +25,47 @@ header {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 header .search-bar {
     display: flex;
+    gap: 10px;
     width: 100%;
     justify-content: center;
-    gap: 10px;
 }
 
-header input,
-header select,
-header button {
+header .search-input,
+header .sort-by,
+header .genres,
+header .year-input,
+header .search-button {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 200px;
 }
 
-header button {
+header .search-input {
+    flex: 2;
+    width: 300px;
+}
+
+header .sort-by,
+header .genres,
+header .year-input,
+header .search-button {
+    flex: 1;
+}
+
+header .search-button {
     background-color: #007BFF;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-header button:hover {
+header .search-button:hover {
     background-color: #0056b3;
 }
 
@@ -60,11 +73,12 @@ header label {
     display: block;
     margin-top: 10px;
     font-weight: bold;
+    text-align: center;
 }
 
 .results {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Grid with 5 columns */
+    grid-template-columns: repeat(5, 1fr);
     gap: 20px;
     justify-items: center;
 }
@@ -75,24 +89,38 @@ header label {
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    width: 200px; /* Reduced width */
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+    min-height: 350px;
 }
 
 .result-card img {
     width: 100%;
-    height: auto;
+    height: 300px;
+    object-fit: cover;
 }
 
 .result-card h2 {
-    font-size: 16px; /* Reduced font size */
-    margin: 10px; /* Reduced margin */
+    font-size: 16px;
+    margin: 10px;
     text-align: center;
-    cursor: pointer; /* Make title clickable */
-    color: #007BFF; /* Make title look like a link */
+    cursor: pointer;
+    color: #007BFF;
+    height: 60px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.result-card .default-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+    display: block; 
 }
 
 .result-card:hover .add-favourite-button {

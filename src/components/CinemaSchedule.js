@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchSchedule } from './FinnkinoApi.js';
+import { fetchSchedule } from './utils/finnkinoApi.js';
 import Movie from './Movie.js';
 import FetchGroups from './FetchGroups.js';
 import ConfirmShare from './ConfirmShare.js';
