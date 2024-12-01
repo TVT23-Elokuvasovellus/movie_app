@@ -67,6 +67,7 @@ router.get('/', (req, res) => {
     try {
       const decoded = jwt.verify(token, 'your_secret_key'); 
       const userId = decoded.id; 
+      const groupId = parseInt(id, 10);
       const groupResult = await pool.query(
         `SELECT 1 
          FROM "Groups" 
@@ -75,9 +76,9 @@ router.get('/', (req, res) => {
          SELECT 1 
          FROM "Members" 
          WHERE "group" = $1 AND member = $2 AND is_pending = FALSE`,
-        [id, userId]
+        [groupId, userId]
       );
-  
+
       if (groupResult.rows.length === 0) {
         return res.status(403).json({ error: "You are not authorized to view this group." });
       }

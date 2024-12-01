@@ -98,7 +98,7 @@ function CinemaSchedule() {
   const handleGroupChange = (event) => {
     setSelectedGroup(event.target.value);
     const group = groups.find(group => group.ID === event.target.value);
-    setSelectedGroupName(group ? group.Name : '');
+    setSelectedGroupName(group ? group.name : '');
   };
 
   const handleShare = () => {
@@ -117,8 +117,10 @@ function CinemaSchedule() {
         },
       ];
 
-      navigate(`/group/${selectedGroup}`, { state: { id: selectedGroup, name: selectedGroupName, sharedMovie: postData[0] } });
-
+      navigate(`/group/${selectedGroup}`, { 
+        state: { id: selectedGroup, name: selectedGroupName, sharedMovie: postData[0] } 
+      });
+      
       setSelectedMovieId(null);
       setModalVisible(false);
     }
@@ -159,9 +161,10 @@ function CinemaSchedule() {
       <div className="dropdown-container-right">
         <div className="select-group">
           <select value={selectedGroup} onChange={handleGroupChange}>
+          <option value="">Select a group</option>
             {groups.map(group => (
-              <option key={group.ID} value={group.ID}>
-                {group.Name}
+              <option key={group.gr_id} value={group.gr_id}>
+                {group.name}
               </option>
             ))}
           </select>
