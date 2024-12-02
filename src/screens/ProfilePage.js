@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../hooks/useAuth';
+import MovieList from '../components/MovieList';
 import './ProfilePage.css';
 
 function ProfilePage() {
@@ -13,6 +14,7 @@ function ProfilePage() {
   const [message, setMessage] = useState('');
   const [isSure, setIsSure] = useState(false);
   const [showDeleteForm, setShowDeleteForm] = useState(false);
+  const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +22,21 @@ function ProfilePage() {
       setIsOwnProfile(user?.id === id);
     }
   }, [loading, user, id]);
+
+  const fetchFavorites = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/favorites?user_id=${userId}`);
+      setFavorites(response.data);
+    } catch (err) {
+      console.error('Error fetching favorites:', err);
+    }
+  };
+
+  useEffect(() => {
+    if (isOwnProfile && user) {
+      fetchFavorites(user.id);
+    }
+  }, [isOwnProfile, user]);
 
   const handleDeleteAccount = async (e) => {
     e.preventDefault();
@@ -88,6 +105,7 @@ function ProfilePage() {
               </form>
             </div>
           )}
+          <MovieList movies={favorites.map(fav => fav.movie)} /> {/* Use fetched data */}
         </>
       ) : (
         <p className="profile-page-text">You are viewing someone else's profile.</p>

@@ -7,6 +7,7 @@ import AccountDeletionRouter from './routers/AccountDeletionRouter.js';
 import ReviewRouter from './routers/ReviewRouter.js';
 import GroupMemRouter from './routers/GroupMemRouter.js';
 import MyGroupsRouter from './routers/MyGroupsRouter.js';
+import favoritesRouter from './routers/favoritesRouter.js'
 
 const port = 3001;
 
@@ -21,6 +22,7 @@ app.use('/', ReviewRouter);
 app.use('/movie', movieRouter)
 app.use('/', GroupMemRouter);
 app.use('/', MyGroupsRouter);
+app.use('/', favoritesRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
