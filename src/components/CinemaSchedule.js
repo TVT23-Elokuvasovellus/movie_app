@@ -49,11 +49,22 @@ function CinemaSchedule() {
     const fetchData = async () => {
       try {
         let date = new Date();
-        if (selectedDay === 'tomorrow') date.setDate(date.getDate() + 1);
-        if (selectedDay === 'dayAfterTomorrow') date.setDate(date.getDate() + 2);
+        console.log(`Initial date: ${date}`);
+  
+        if (selectedDay === 'tomorrow') {
+          date.setDate(date.getDate() + 1);
+        } else if (selectedDay === 'dayAfterTomorrow') {
+          date.setDate(date.getDate() + 2);
+        }
 
-        const formattedDate = date.toLocaleDateString('fi-FI');
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        const formattedDate = `${day}.${month}.${year}`;
+
         const scheduleData = await fetchSchedule(selectedTheatre, formattedDate);
+        console.log(`Fetched data:`, scheduleData);
+        
         const currentTime = new Date();
         const upcomingShows = scheduleData.filter(show => new Date(show.dttmShowStart) > currentTime);
         const sortedShows = upcomingShows.sort((a, b) => new Date(a.dttmShowStart) - new Date(b.dttmShowStart));
@@ -62,9 +73,10 @@ function CinemaSchedule() {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
   }, [selectedDay, selectedTheatre]);
+
 
   useEffect(() => {
     const fetchGroupData = async () => {
