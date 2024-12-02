@@ -1,3 +1,75 @@
+.container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sortBy {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.sortBy label {
+  margin-right: 10px;
+}
+
+.review-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li p {
+  margin: 5px 0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.pagination button:hover:enabled {
+    background-color: #0056b3;
+}
+
+.pagination span {
+    font-size: 16px;
+}
+
 .movie-title {
     cursor: pointer;
     color: #007BFF;
@@ -7,3 +79,8 @@
     cursor: pointer;
     color: #00D9FF;
 }
+
+.dark-mode .review-item {
+    background-color: #444444;
+    margin: 10px 0;
+  }
