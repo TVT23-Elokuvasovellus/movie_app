@@ -55,32 +55,32 @@ const Navbar = ({ isLoggedIn }) => {
             <nav className="navbar">
                 <div className="navbar-left">
                     <Link to="/">
-                        <button className="nav-button">Etusivu</button>
+                        <button className="nav-button">Home</button>
                     </Link>
                     <Link to="/showtimes">
-                        <button className="nav-button">Näytösajat</button>
+                        <button className="nav-button">Showtimes</button>
                     </Link>
                     <Link to={`/profile/${userId}`}>
-                        <button className="nav-button">Profiili</button>
+                        <button className="nav-button">Profile</button>
                     </Link>
                     <Link to={"/groups"}>
-                        <button className="nav-button">Ryhmät</button>
+                        <button className="nav-button">Groups</button>
                     </Link>
                     <button className="nav-button" onClick={handleShowNotifications}>
-                        Ilmoitukset ({notificationsCount})
+                        Notifications ({notificationsCount})
                     </button>
                     <button className="dark-mode-button" onClick={toggleDarkMode}>
-                        {isDarkMode ? 'Vaalea teema' : 'Tumma teema'}
+                        {isDarkMode ? 'Light Mode' : 'Dark Mode'}
                     </button>
                 </div>
                 <div className="navbar-right">
                     {isLoggedIn ? (
                         <span>
-                            Kirjautuneena: {username} <button onClick={handleLogout}>Kirjaudu ulos</button>
+                            Logged In As: {username} <button onClick={handleLogout}>Log Out</button>
                         </span>
                     ) : (
                         <>
-                            <Link to="/login">Kirjaudu sisään</Link>. Uusi käyttäjä? <Link to="/signup">Rekisteröidy</Link>.
+                            <Link to="/login">Log In.</Link> No Account? <Link to="/signup">Sign Up.</Link>
                         </>
                     )}
                 </div>

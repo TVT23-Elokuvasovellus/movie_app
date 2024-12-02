@@ -51,11 +51,11 @@ const App = () => {
         },
         {
           path: "movie/:id",
-          element: <Review/>
+          element: <Review isLoggedIn={isLoggedIn} />
         },
         {
           path: "/movieinfo/:movieId",
-          element: <MovieInfo />
+          element: <MovieInfo isLoggedIn={isLoggedIn} />
         },
         {
           path: "showtimes",
@@ -63,7 +63,7 @@ const App = () => {
         },
         {
           path: "groups",
-          element: <GroupsPage />
+          element: <GroupsPage isLoggedIn={isLoggedIn} />
         },
         {
           path: "*",

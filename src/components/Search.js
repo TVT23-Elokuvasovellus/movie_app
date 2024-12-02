@@ -133,11 +133,11 @@ function Search() {
                         value={search} 
                         onChange={updateSearch} 
                         className="search-input" 
-                        placeholder="Elokuvan nimi..." 
+                        placeholder="Search By Title..." 
                     />
-                    <button className="search-button" onClick={() => performSearch(1)}>Hae hakusanalla</button>
+                    <button className="search-button" onClick={() => performSearch(1)}>Search By Title</button>
                 </div>
-                <label htmlFor="sortBy">Järjestä: </label>
+                <label htmlFor="sortBy">Sort By: </label>
                 <select id="sortBy" name="sortBy" value={selectedSort} onChange={handleSortChange} className="sort-by">
                     <option value=""></option>
                     <option value="original_title.asc">Original Title (A-Z)</option>
@@ -160,7 +160,7 @@ function Search() {
                         <option key={index} value={item.id}>{item.name}</option>
                     ))}
                 </select>
-                <label htmlFor='searchYear'>Vuosi: </label>
+                <label htmlFor='searchYear'>Year: </label>
                 <input 
                     type="number" 
                     id="searchYear" 
@@ -169,8 +169,8 @@ function Search() {
                     className="year-input" 
                     placeholder="2024" 
                 />
-                <button className="search-button" onClick={() => performAdvancedSearch(1)}>Hae rajauksilla</button>
-                <button className="search-button" onClick={() => fetchPopularMovies(1)}>Suosittuja elokuvia</button>
+                <button className="search-button" onClick={() => performAdvancedSearch(1)}>Search By Criteria</button>
+                <button className="search-button2" onClick={() => fetchPopularMovies(1)}>Popular Movies On TMDB</button>
             </header>
             <div className="results">
                 {loading && <p>Loading...</p>}
@@ -189,14 +189,14 @@ function Search() {
                                 }
                             }} 
                         />
-                        <button className="add-favourite-button" onClick={() => handleAddFavourite(item)}>Lisää suosikkilistalleni</button>
+                        <button className="add-favourite-button" onClick={() => handleAddFavourite(item)}>Add To Favourites</button>
                     </div>
                 ))}
             </div>
             <div className="pagination">
-                <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>Edellinen</button>
-                <span>Sivu {currentPage} / {totalPages}</span>
-                <button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages}>Seuraava</button>
+                <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+                <span>Page {currentPage} of {totalPages}</span>
+                <button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
             </div>
         </div>
     );

@@ -69,6 +69,10 @@ header .search-button:hover {
     background-color: #0056b3;
 }
 
+.search-button2 {
+    width: 400px;
+}
+
 header label {
     display: block;
     margin-top: 10px;
@@ -114,6 +118,10 @@ header label {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+}
+
+.result-card:hover {
+    transform: translateY(-10px);
 }
 
 .result-card .default-img {
@@ -182,24 +190,24 @@ header label {
 
 /* Dark Mode Styles */
 body.dark-mode {
-    background-color: #333;
+    background-color: #1e1e1e;
     color: white;
 }
 
 .container.dark-mode {
-    background-color: #333;
+    background-color: #1e1e1e;
     color: white;
 }
 
 header.dark-mode {
-    background-color: #444;
+    background-color: #2e2e2e;
     color: white;
 }
 
 header input.dark-mode,
 header select.dark-mode,
 header button.dark-mode {
-    background-color: #555;
+    background-color: #3e3e3e;
     border: 1px solid #777;
     color: white;
 }
@@ -213,7 +221,7 @@ header button.dark-mode:hover {
 }
 
 .result-card.dark-mode {
-    background-color: #444;
+    background-color: #2e2e2e;
     color: white;
 }
 
