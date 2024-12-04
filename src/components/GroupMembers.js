@@ -68,7 +68,6 @@ function GroupMembers({ groupId }) {
         <p>No members in this group.</p>
       )}
     </div>
-  );
+  )
 }
-
 export default GroupMembers;

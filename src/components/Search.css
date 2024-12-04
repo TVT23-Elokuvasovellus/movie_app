@@ -25,73 +25,134 @@ header {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 header .search-bar {
     display: flex;
+    gap: 10px;
     width: 100%;
     justify-content: center;
-    gap: 10px;
 }
 
-header input,
-header select,
-header button {
+header .search-input,
+header .sort-by,
+header .genres,
+header .year-input,
+header .search-button {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 200px;
 }
 
-header button {
+header .search-input {
+    flex: 2;
+    width: 300px;
+}
+
+header .sort-by,
+header .genres,
+header .year-input,
+header .search-button {
+    flex: 1;
+}
+
+header .search-button {
     background-color: #007BFF;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-header button:hover {
+header .search-button:hover {
     background-color: #0056b3;
+}
+
+.search-button2 {
+    width: 400px;
 }
 
 header label {
     display: block;
     margin-top: 10px;
     font-weight: bold;
+    text-align: center;
 }
 
 .results {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     gap: 20px;
+    justify-items: center;
 }
 
 .result-card {
+    position: relative;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transition: transform 0.2s;
-    width: 300px;
-    margin-bottom: 20px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    min-height: 350px;
 }
 
 .result-card img {
     width: 100%;
-    height: auto;
+    height: 300px;
+    object-fit: cover;
 }
 
 .result-card h2 {
-    font-size: 18px;
-    margin: 15px;
+    font-size: 16px;
+    margin: 10px;
     text-align: center;
+    cursor: pointer;
+    color: #007BFF;
+    height: 60px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
 }
 
 .result-card:hover {
     transform: translateY(-10px);
+}
+
+.result-card .default-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+    display: block; 
+}
+
+.result-card:hover .add-favourite-button {
+    display: block;
+}
+
+.add-favourite-button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 6px 10px;
+    background-color: rgba(0, 123, 255, 0.9);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 5px 0;
+}
+
+.add-favourite-button:hover {
+    background-color: rgba(0, 86, 179, 0.9);
 }
 
 /* Pagination Styles */
@@ -128,51 +189,51 @@ header label {
 }
 
 /* Dark Mode Styles */
-.dark-mode body {
-    background-color: #333;
+body.dark-mode {
+    background-color: #1e1e1e;
     color: white;
 }
 
-.dark-mode .container {
-    background-color: #333;
+.container.dark-mode {
+    background-color: #1e1e1e;
     color: white;
 }
 
-.dark-mode header {
-    background-color: #444;
+header.dark-mode {
+    background-color: #2e2e2e;
     color: white;
 }
 
-.dark-mode header input,
-.dark-mode header select,
-.dark-mode header button {
-    background-color: #555;
+header input.dark-mode,
+header select.dark-mode,
+header button.dark-mode {
+    background-color: #3e3e3e;
     border: 1px solid #777;
     color: white;
 }
 
-.dark-mode header button {
+header button.dark-mode {
     background-color: #007BFF;
 }
 
-.dark-mode header button:hover {
+header button.dark-mode:hover {
     background-color: #0056b3;
 }
 
-.dark-mode .result-card {
-    background-color: #444;
+.result-card.dark-mode {
+    background-color: #2e2e2e;
     color: white;
 }
 
-.dark-mode .result-card h2 {
+.result-card h2.dark-mode {
     color: white;
 }
 
-.dark-mode .pagination button {
+.pagination button.dark-mode {
     background-color: #007BFF;
     color: white;
 }
 
-.dark-mode .pagination button:hover:enabled {
+.pagination button.dark-mode:hover:enabled {
     background-color: #0056b3;
 }
