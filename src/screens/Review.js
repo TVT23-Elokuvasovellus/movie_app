@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from "react-router-dom";
+import { useAuth } from '../hooks/useAuth';
 
 const url = 'http://localhost:3001'
 const token = process.env.REACT_APP_API_TOKEN;
@@ -14,9 +15,10 @@ const options = {
 };
 
 function Review() {
+    const { isLoggedIn, user, loading } = useAuth();
     const location = useLocation();
     const movieId = (location.pathname.toString()).slice(8);
-    console.log("Location: " + location.pathname);
+    console.log("User id is: " + user?.id);
     console.log("movie id is: " + movieId);
     const [reviews, setReviews] = useState([])
     const [movieData, setMovieData] = useState([])
@@ -46,13 +48,19 @@ function Review() {
             stars: "stars",
             text: "text",
             time: "time",
-            account: "account"
+            account: user?.id
         })
         
+    }
+    const deleteReview = () =>{
+        axios.delete(url + '/movie/' + movieId + '/delete', {
+            account: user?.id
+        })
     }
     useEffect(() => {
         getMovieDetails();
         getReviews();
+
     },[movieId])
 
     return (
@@ -72,6 +80,7 @@ function Review() {
                     </div>
                 ))}
             </div>
+            {isLoggedIn ? (
             <form onSubmit={addReview}>
                 <label for="stars">Stars: </label>
                 <input type='number' id="stars" name="stars" min="0" max="5"></input>
@@ -81,6 +90,9 @@ function Review() {
                 <br/>
                 <input type='submit'/>
             </form>
+            ) : (
+                <p>Log in to write a review.</p>
+            )}
         </div>
     )
 }

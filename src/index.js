@@ -54,7 +54,7 @@ const App = () => {
         },
         {
           path: "/movieinfo/:movieId",
-          element: <MovieInfo />
+          element: <MovieInfo userId={userId}/>
         },
         {
           path: "showtimes",
