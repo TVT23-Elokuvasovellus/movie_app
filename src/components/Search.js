@@ -1,7 +1,6 @@
 import './Search.css';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Search() {
     const [search, setSearch] = useState('');
@@ -177,7 +176,9 @@ function Search() {
                 {error && <p className="error">{error}</p>}
                 {!loading && !error && results?.map((item, index) => (
                     <div className="result-card" key={index}>
-                        <h2 onClick={() => navigate(`/movie/${item.id}`)}>{item.title}</h2>
+                        <Link to={`/movieinfo/${item.id}`} className="movie-title">
+                            <h2>{item.title}</h2>
+                        </Link>
                         <img 
                             src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} 
                             alt={item.title} 
