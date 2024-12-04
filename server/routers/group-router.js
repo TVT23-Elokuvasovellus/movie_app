@@ -13,52 +13,55 @@ router.get('/', (req, res) => {
     });
   });
   
-  router.post('/create', async (req, res) => {
-    const token = req.headers.authorization?.split(' ')[1]; 
+router.post('/create', async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1]; 
 
-    jwt.verify(token, 'your_secret_key', async (err, decoded) => {
-      if (err) {
-        return res.status(401).json({ error: 'Invalid or expired token' });
-      }
-  
-      const { name } = req.body;
-      const ac_id = decoded.id;  
-  
-      try {
-        const result = await pool.query(
-          'INSERT INTO "Groups" (owner, name) VALUES ($1, $2) RETURNING *',
-          [ac_id, name]
-        );
-        res.status(201).json(result.rows[0]);
-      } catch (error) {
-        res.status(500).json({ error: 'Failed to create group' });
-      }
-    });
-  });
-  
-  router.delete('/delete/:id', async (req, res) => {
-    const { id } = req.params;
-    const token = req.headers.authorization?.split(' ')[1];
-      try {
-        const decoded = jwt.verify(token, 'your_secret_key');
-        const ac_id = decoded.id; 
-
-        const groupResult = await pool.query(
-            'SELECT * FROM "Groups" WHERE "gr_id" = $1 AND "owner" = $2',
-            [id, ac_id]
-        );
-
-        if (groupResult.rows.length === 0) {
-            return res.status(403).json({ error: 'You are not authorized to delete this group.' });
-        }
-
-        await pool.query('DELETE FROM "Groups" WHERE "gr_id" = $1', [id]);
-
-        res.status(200).json({ message: 'Group deleted successfully.' });
-    } catch (error) {
-        console.error('Error deleting group:', error.message);
-        res.status(500).json({ error: 'Failed to delete group.' });
+  jwt.verify(token, 'your_secret_key', async (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: 'Invalid or expired token' });
     }
+
+    const { name } = req.body;
+    const ac_id = decoded.id;  
+
+    try {
+      const result = await pool.query(
+        'INSERT INTO "Groups" (owner, name) VALUES ($1, $2) RETURNING *',
+        [ac_id, name]
+      );
+      console.log(`User ${ac_id} created group ${result.rows[0].gr_id}`);
+      res.status(201).json(result.rows[0]);
+    } catch (error) {
+      console.error('Error creating group:', error.message);
+      res.status(500).json({ error: 'Failed to create group' });
+    }
+  });
+});
+
+router.delete('/delete/:id', async (req, res) => {
+  const { id } = req.params;
+  const token = req.headers.authorization?.split(' ')[1];
+  
+  try {
+    const decoded = jwt.verify(token, 'your_secret_key');
+    const ac_id = decoded.id; 
+
+    const groupResult = await pool.query(
+      'SELECT * FROM "Groups" WHERE "gr_id" = $1 AND "owner" = $2',
+      [id, ac_id]
+    );
+
+    if (groupResult.rows.length === 0) {
+      return res.status(403).json({ error: 'You are not authorized to delete this group.' });
+    }
+
+    await pool.query('DELETE FROM "Groups" WHERE "gr_id" = $1', [id]);
+    console.log(`User ${ac_id} deleted group ${id}`);
+    res.status(200).json({ message: 'Group deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting group:', error.message);
+    res.status(500).json({ error: 'Failed to delete group' });
+  }
 });
   
   router.get('/group/:id', async (req, res) => {
