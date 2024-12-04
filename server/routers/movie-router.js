@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getReview, postReview, deleteReview } from "../controllers/movieController.js";
+import { getReview, postReview, deleteReview } from "../controllers/movie-controller.js";
 
 const router = Router()
 
