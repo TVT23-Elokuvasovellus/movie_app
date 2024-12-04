@@ -16,6 +16,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.post('/api/ping', (req, res) => {
+  console.log('Ping received:', req.body.message);
+  res.sendStatus(200);
+});
+
 app.use('/', groupRouter);
 app.use('/', authRouter);
 app.use('/', accountDeletionRouter);

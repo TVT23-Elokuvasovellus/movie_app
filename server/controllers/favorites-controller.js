@@ -12,6 +12,7 @@ export const getFavoritesByUserId = async (req, res) => {
             return res.status(404).json({ message: 'No favorites found for this user' });
         }
         res.json(result.rows);
+        console.log('Fetching favorites for user ID:', userId);
     } catch (err) {
         console.error('Error fetching favorites:', err);
         res.status(500).json({ error: 'An error occurred while fetching favorites' });
@@ -31,6 +32,7 @@ export const addFavorite = async (req, res) => {
             [ac_id, mo_id, movie]
         );
         res.status(201).json(result.rows[0]);
+        console.log(`Inserting movie "${movie}" (mo_id: ${mo_id}) into the favorite list of user (ac_id: ${ac_id})`);
     } catch (err) {
         console.error('Error adding favorite:', err);
         res.status(500).json({ error: 'An error occurred while adding favorite' });
