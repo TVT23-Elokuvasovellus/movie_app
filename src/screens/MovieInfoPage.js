@@ -3,7 +3,9 @@ import { useLocation } from 'react-router-dom';
 import './MovieInfoPage.css';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../hooks/useAuth';
+import axios from 'axios';
 
+const url = 'http://localhost:3001'
 const token = process.env.REACT_APP_API_TOKEN;
 
 function MovieInfo() {
@@ -16,8 +18,38 @@ function MovieInfo() {
   const [selectedSort, setSelectedSort] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const castListRef = useRef(null);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
   const reviewsPerPage = 9;
+
+  const getReviews = () =>{
+    axios.get(url + '/movie/'+ movieId)
+    .then(response => {
+        setReviews(response.data)
+        console.log(response.data)
+    }).catch(err => {
+      console.error('Error trying to get reviews: ', err);
+    })
+  }
+
+  const addReview = () =>{
+    console.log("Addreview wohoo!");
+    axios.post(url + '/movie/' + movieId +'/create', {
+        stars: "stars",
+        text: "text",
+        time: "time",
+        account: user?.id
+    }).catch(err => {
+      console.error('Error trying to add a review: ', err);
+    })
+  }
+
+const deleteReview = () =>{
+    axios.delete(url + '/movie/' + movieId + '/delete', {
+        account: user?.id
+    }).catch(err => {
+      console.error('Error trying to delete review: ', err);
+    })
+  }
 
   const handleSortChange = (event) => {
     const sortType = event.target.value;
@@ -75,12 +107,7 @@ function MovieInfo() {
         setActors(actorsData.cast);
 
         // Fetch possible reviews of the movie
-        const reviewsResponse = await fetch(`http://localhost:3001/reviews?movie=${data.title}`);
-        if (!reviewsResponse.ok) {
-          throw new Error('Failed to fetch movie reviews');
-        }
-        const reviewsData = await reviewsResponse.json();
-        setReviews(reviewsData);
+        getReviews();
       } catch (error) {
         setError(error.message);
       }

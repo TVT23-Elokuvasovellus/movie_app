@@ -46,7 +46,7 @@ const App = () => {
           element: <ProfilePage isLoggedIn={isLoggedIn} userId={userId} />
         },
         {
-          path: "/group/:id", 
+          path: "/group/:id",
           element: <GroupPage isLoggedIn={isLoggedIn} />
         },
         {
@@ -55,7 +55,7 @@ const App = () => {
         },
         {
           path: "/movieinfo/:movieId",
-          element: <MovieInfo isLoggedIn={isLoggedIn} />n
+          element: <MovieInfo isLoggedIn={isLoggedIn} />
         },
         {
           path: "showtimes",
