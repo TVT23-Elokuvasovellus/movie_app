@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import '../styles/Search.css';
 
 function Search() {
@@ -15,6 +16,7 @@ function Search() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const token = process.env.REACT_APP_API_TOKEN;
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     const options = {
@@ -104,8 +106,36 @@ function Search() {
     };
 
     const handleAddFavourite = (movie) => {
-        console.log(`Adding ${movie.title} to favourites`);
+        const payload = {
+            ac_id: user?.id,
+            mo_id: movie.id,
+            movie: movie.title
+        };
+
+        const url = 'http://localhost:3001/favorites';
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(`Added ${data.movie} to favourites`);
+        })
+        .catch(error => {
+            console.error('Error adding to favourites:', error);
+        });
     };
+
+    
 
     useEffect(() => {
         getGenres();
