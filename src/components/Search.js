@@ -1,6 +1,6 @@
-import './Search.css';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import '../styles/Search.css';
 
 function Search() {
     const [search, setSearch] = useState('');

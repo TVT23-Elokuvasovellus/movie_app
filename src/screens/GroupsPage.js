@@ -1,7 +1,8 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import GroupCreator from '../components/GroupCreator';
-import './GroupsPage.css';
+import '../styles/GroupsPage.css';
+
 
 const GroupsPage = ({ isDarkMode, isLoggedIn }) => {
   return (

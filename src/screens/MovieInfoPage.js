@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import './MovieInfoPage.css';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../hooks/useAuth';
+import '../styles/MovieInfoPage.css';
 
 const token = process.env.REACT_APP_API_TOKEN;
 

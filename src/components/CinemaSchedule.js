@@ -4,13 +4,13 @@ import { fetchSchedule } from './utils/finnkinoApi.js';
 import Movie from './Movie.js';
 import FetchGroups from './FetchGroups.js';
 import ConfirmShare from './ConfirmShare.js';
-import './CinemaSchedule.css';
+import '../styles/CinemaSchedule.css';
 
 
 function CinemaSchedule() {
   const [shows, setShows] = useState([]);
   const [groups, setGroups] = useState([]);
-  const [theatres, setTheatres] = useState([
+  const [theatres] = useState([
     { ID: '1014', Name: 'Pääkaupunkiseutu' },
     { ID: '1012', Name: 'Espoo' },
     { ID: '1039', Name: 'Espoo: OMENA' },

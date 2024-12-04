@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import './GroupCreator.css'
+import '../styles/GroupCreator.css';
 
 
 function GroupCreator({ isLoggedIn }) {
