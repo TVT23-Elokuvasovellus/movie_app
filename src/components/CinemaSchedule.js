@@ -129,9 +129,29 @@ function CinemaSchedule() {
         },
       ];
 
-      navigate(`/group/${selectedGroup}`, { 
-        state: { id: selectedGroup, name: selectedGroupName, sharedMovie: postData[0] } 
-      });
+      const token = localStorage.getItem('authToken');
+        try {
+            const response = await fetch(`http://localhost:3001/group/${selectedGroup}/addShow`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`, 
+                },
+                body: JSON.stringify({ sharedShow: postData[0] }), 
+            });
+            const data = await response.json();
+              if (response.ok && data.success) {
+                console.log('Movie shared successfully:', data.movie);
+
+                navigate(`/group/${selectedGroup}`, { 
+                    state: { id: selectedGroup, name: selectedGroupName, sharedMovie: postData[0] } 
+                });
+            } else {
+                console.error('Failed to share movie:', data.error || 'Unknown error');
+            }
+        } catch (err) {
+            console.error('Error while sharing the movie:', err); 
+        }
       
       setSelectedMovieId(null);
       setModalVisible(false);
