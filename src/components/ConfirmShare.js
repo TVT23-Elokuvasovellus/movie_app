@@ -1,5 +1,5 @@
 import React from 'react';
-import './ConfirmShare.css';
+import '../styles/ConfirmShare.css';
 
 const ConfirmShare = ({ show, handleClose, handleConfirm, movieTitle, groupName }) => {
   if (!show) return null;

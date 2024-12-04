@@ -1,7 +1,7 @@
-import './Search.css';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import '../styles/Search.css';
 
 function Search() {
     const [search, setSearch] = useState('');
@@ -16,6 +16,7 @@ function Search() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const token = process.env.REACT_APP_API_TOKEN;
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     const options = {
@@ -105,8 +106,36 @@ function Search() {
     };
 
     const handleAddFavourite = (movie) => {
-        console.log(`Adding ${movie.title} to favourites`);
+        const payload = {
+            ac_id: user?.id,
+            mo_id: movie.id,
+            movie: movie.title
+        };
+
+        const url = 'http://localhost:3001/favorites';
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(`Added ${data.movie} to favourites`);
+        })
+        .catch(error => {
+            console.error('Error adding to favourites:', error);
+        });
     };
+
+    
 
     useEffect(() => {
         getGenres();
@@ -177,7 +206,9 @@ function Search() {
                 {error && <p className="error">{error}</p>}
                 {!loading && !error && results?.map((item, index) => (
                     <div className="result-card" key={index}>
-                        <h2 onClick={() => navigate(`/movie/${item.id}`)}>{item.title}</h2>
+                        <Link to={`/movieinfo/${item.id}`} className="movie-title">
+                            <h2>{item.title}</h2>
+                        </Link>
                         <img 
                             src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} 
                             alt={item.title} 

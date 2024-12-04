@@ -1,4 +1,4 @@
-import { insertReview, selectMovieReviewsById, removeReview } from "../models/movie.js";
+import { insertReview, selectMovieReviewsById, removeReview } from "../models/temp_movie.js";
 
 const postReview = async (req,res,next) => {
     try {

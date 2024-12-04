@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import CinemaSchedule from '../components/CinemaSchedule';
-import './ShowtimesPage.css';
+import '../styles/ShowtimesPage.css';
 
 const Showtimes = ({ isLoggedIn }) => {
   return (

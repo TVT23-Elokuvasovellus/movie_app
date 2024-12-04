@@ -1,14 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import groupRouter from './routers/groupRouter.js';
-import AuthRouter from './routers/AuthRouter.js';
-import movieRouter from './routers/movieRouter.js';
-import AccountDeletionRouter from './routers/AccountDeletionRouter.js';
-import ReviewRouter from './routers/ReviewRouter.js';
-import GroupMemRouter from './routers/GroupMemRouter.js';
-import MyGroupsRouter from './routers/MyGroupsRouter.js';
-import favoritesRouter from './routers/favoritesRouter.js'
-import GroupShareRouter from './routers/GroupShareRouter.js';
+import groupRouter from './routers/group-router.js';
+import authRouter from './routers/auth-router.js';
+import movieRouter from './routers/movie-router.js';
+import accountDeletionRouter from './routers/account-deletion-router.js';
+import reviewRouter from './routers/review-router.js';
+import groupMemRouter from './routers/group-mem-router.js';
+import myGroupsRouter from './routers/my-groups-router.js';
+import favoritesRouter from './routers/favorites-router.js'
+import groupShareRouter from './routers/group-share-router.js';
 
 const port = 3001;
 
@@ -17,14 +17,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/', groupRouter);
-app.use('/', AuthRouter);
-app.use('/', AccountDeletionRouter);
-app.use('/', ReviewRouter);
+app.use('/', authRouter);
+app.use('/', accountDeletionRouter);
+app.use('/', reviewRouter);
 app.use('/movie', movieRouter)
-app.use('/', GroupMemRouter);
-app.use('/', MyGroupsRouter);
+app.use('/', groupMemRouter);
+app.use('/', myGroupsRouter);
 app.use('/', favoritesRouter);
-app.use('/', GroupShareRouter);
+app.use('/', groupShareRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

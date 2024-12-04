@@ -1,7 +1,7 @@
-import './Navbar.css';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Notifications from './Notifications';
+import '../styles/Navbar.css';
 
 const Navbar = ({ isLoggedIn }) => {
     const [isDarkMode, setIsDarkMode] = useState(() => {

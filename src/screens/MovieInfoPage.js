@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import './MovieInfoPage.css';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../hooks/useAuth';
 import axios from 'axios';
+import '../styles/MovieInfoPage.css';
 
 const url = 'http://localhost:3001'
 const token = process.env.REACT_APP_API_TOKEN;

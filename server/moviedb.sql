@@ -72,49 +72,42 @@ ALTER TABLE IF EXISTS public."Favorites"
     ADD CONSTRAINT favorites_ac_id FOREIGN KEY (ac_id)
     REFERENCES public."Accounts" (ac_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE CASCADE
-    NOT VALID;
+    ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS public."Groups"
     ADD CONSTRAINT groups_ac_id FOREIGN KEY (owner)
     REFERENCES public."Accounts" (ac_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE CASCADE
-    NOT VALID;
+    ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS public."Members"
     ADD CONSTRAINT members_ac_id FOREIGN KEY (member)
     REFERENCES public."Accounts" (ac_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE CASCADE
-    NOT VALID;
+    ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS public."Members"
     ADD CONSTRAINT members_gr_id FOREIGN KEY ("group")
     REFERENCES public."Groups" (gr_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE CASCADE
-    NOT VALID;
+    ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS public."Ratings"
     ADD CONSTRAINT ratings_ac_id FOREIGN KEY (ac_id)
     REFERENCES public."Accounts" (ac_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE CASCADE
-    NOT VALID;
+    ON DELETE CASCADE;
 
 ALTER TABLE public."Shared"
     ADD CONSTRAINT shared_ac_id FOREIGN KEY (ac_id)
     REFERENCES public."Accounts" (ac_id)
     ON UPDATE NO ACTION
     ON DELETE CASCADE;
-    NOT VALID;
 
 ALTER TABLE public."Shared"
     ADD CONSTRAINT shared_gr_id FOREIGN KEY (gr_id)
     REFERENCES public."Groups" (gr_id)
     ON UPDATE NO ACTION
     ON DELETE CASCADE;
-    NOT VALID;
 
 END;
