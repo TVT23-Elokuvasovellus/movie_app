@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Search from '../components/Search';
 import ReviewList from '../components/ReviewList';
+import '../styles/HomePage.css';
 
 const HomeScreen = ({ isDarkMode, isLoggedIn }) => {
   return (

@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../hooks/useAuth';
 import MovieList from '../components/MovieList';
-import './ProfilePage.css';
+import '../styles/ProfilePage.css';
 
 function ProfilePage() {
   const { id } = useParams();

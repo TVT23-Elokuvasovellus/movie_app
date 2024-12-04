@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import './Authentication.css';
+import '../styles/Authentication.css';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
