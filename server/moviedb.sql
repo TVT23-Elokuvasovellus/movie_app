@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS public."Members" CASCADE;
 DROP TABLE IF EXISTS public."Groups" CASCADE;
 DROP TABLE IF EXISTS public."Favorites" CASCADE;
 DROP TABLE IF EXISTS public."Accounts" CASCADE;
+DROP TABLE IF EXISTS public."Shared" CASCADE;
 
 -- Recreate tables
 CREATE TABLE IF NOT EXISTS public."Accounts"
@@ -54,6 +55,19 @@ CREATE TABLE IF NOT EXISTS public."Ratings"
     CONSTRAINT "Ratings_pkey" PRIMARY KEY (ra_id)
 );
 
+CREATE TABLE IF NOT EXISTS public."Shared"
+(
+    sh_id SERIAL NOT NULL,
+    ac_id INTEGER NOT NULL,
+    gr_id INTEGER NOT NULL,
+    title VARCHAR(255) NOT NULL, 
+    location VARCHAR(255), 
+    time TIMESTAMP, 
+    date DATE,
+    shared_at TIMESTAMP DEFAULT NOW(),  
+    CONSTRAINT "Shared_pkey" PRIMARY KEY (sh_id)
+);
+
 ALTER TABLE IF EXISTS public."Favorites"
     ADD CONSTRAINT favorites_ac_id FOREIGN KEY (ac_id)
     REFERENCES public."Accounts" (ac_id) MATCH SIMPLE
@@ -87,6 +101,20 @@ ALTER TABLE IF EXISTS public."Ratings"
     REFERENCES public."Accounts" (ac_id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE CASCADE
+    NOT VALID;
+
+ALTER TABLE public."Shared"
+    ADD CONSTRAINT shared_ac_id FOREIGN KEY (ac_id)
+    REFERENCES public."Accounts" (ac_id)
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE;
+    NOT VALID;
+
+ALTER TABLE public."Shared"
+    ADD CONSTRAINT shared_gr_id FOREIGN KEY (gr_id)
+    REFERENCES public."Groups" (gr_id)
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE;
     NOT VALID;
 
 END;

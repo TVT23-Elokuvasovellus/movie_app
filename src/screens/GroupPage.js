@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import GroupMembers from '../components/GroupMembers'
+import GroupShare from '../components/GroupShare';
 import './GroupPage.css';
 import { useAuth } from '../hooks/useAuth';
 
@@ -158,6 +159,7 @@ function GroupPage() {
           ) : (
             <p>No pending requests.</p>
           )}
+      <GroupShare/>
       </div>
     </div>
   );

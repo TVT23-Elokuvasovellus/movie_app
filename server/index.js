@@ -8,6 +8,7 @@ import ReviewRouter from './routers/ReviewRouter.js';
 import GroupMemRouter from './routers/GroupMemRouter.js';
 import MyGroupsRouter from './routers/MyGroupsRouter.js';
 import favoritesRouter from './routers/favoritesRouter.js'
+import GroupShareRouter from './routers/GroupShareRouter.js';
 
 const port = 3001;
 
@@ -23,6 +24,7 @@ app.use('/movie', movieRouter)
 app.use('/', GroupMemRouter);
 app.use('/', MyGroupsRouter);
 app.use('/', favoritesRouter);
+app.use('/', GroupShareRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
