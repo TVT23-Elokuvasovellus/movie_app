@@ -13,7 +13,7 @@ router.post('/login', async (req, res) => {
         const account = result.rows[0];
 
         if (account && await bcrypt.compare(password, account.password)) {
-            const token = jwt.sign({ id: account.ac_id }, 'your_secret_key', { expiresIn: '1h' });
+            const token = jwt.sign({ id: account.ac_id }, 'your_secret_key');
             console.log(`User ${account.ac_id} (${account.email}) logged in successfully`);
             res.json({
                 success: true,

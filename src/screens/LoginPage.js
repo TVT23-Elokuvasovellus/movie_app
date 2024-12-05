@@ -22,6 +22,7 @@ const Login = () => {
                 localStorage.setItem('email', response.data.email);
                 setIsLoggedIn(true); 
                 navigate('/');
+                window.location.reload();
             } 
         } catch (err) {
             setMessage('An error occurred');
