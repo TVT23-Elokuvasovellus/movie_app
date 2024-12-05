@@ -206,7 +206,7 @@ function Search() {
                 {error && <p className="error">{error}</p>}
                 {!loading && !error && results?.map((item, index) => (
                     <div className="result-card" key={index}>
-                        <Link to={`/movieinfo/${item.id}`} className="movie-title">
+                        <Link to={`/movie/${item.id}`} className="movie-title">
                             <h2>{item.title}</h2>
                         </Link>
                         <img 

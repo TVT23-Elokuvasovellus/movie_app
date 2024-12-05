@@ -107,7 +107,7 @@ function ReviewList() {
         <ul className = 'reviews-grid'>
           {currentReviews.map((review) => (
             <li key={review.ra_id} className = 'review-item'>
-              <Link to={`/movieinfo/${movieIdMap[review.movie]}`} className="movie-title">
+              <Link to={`/movie/${review.mo_id}`} className="movie-title">
                 <h4>{review.movie}</h4>
               </Link>
               <p>{review.text}</p>

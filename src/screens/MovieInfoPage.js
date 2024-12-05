@@ -8,9 +8,18 @@ import '../styles/MovieInfoPage.css';
 const url = 'http://localhost:3001'
 const token = process.env.REACT_APP_API_TOKEN;
 
+const options = {
+  method: 'GET',
+  headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`
+  }
+};
+
 function MovieInfo() {
   const location = useLocation();
-  const movieId = location.pathname.split('/').pop();
+  const movieId = (location.pathname.toString()).slice(7);
+  console.log(movieId);
   const [movieInfo, setMovieInfo] = useState(null);
   const [error, setError] = useState(null);
   const [actors, setActors] = useState([]);
@@ -90,21 +99,28 @@ const deleteReview = () =>{
         if (!movieId) {
           throw new Error('Movie ID is missing');
         }
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${token}`);
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch movie details');
-        }
-        const data = await response.json();
-        setMovieInfo(data);
+        const searchUrlMovie = `https://api.themoviedb.org/3/movie/${movieId}?api_key=API_KEY`
+        fetch(searchUrlMovie, options)
+        .then(res => res.json())
+        .then(json => {
+            setMovieInfo(json);
+            console.log(json);
+        })
+        .catch(err => {
+            console.error('Movie details error:', err);
+        });
 
         // Fetch actors
-        const actorsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${token}`);
-        if (!actorsResponse.ok) {
-          throw new Error('Failed to fetch movie actors');
-        }
-        const actorsData = await actorsResponse.json();
-        setActors(actorsData.cast);
+        const searchUrlActors = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=API_KEY`
+        fetch(searchUrlActors, options)
+        .then(res => res.json())
+        .then(json => {
+            setActors(json.cast);
+            console.log(json.cast);
+        })
+        .catch(err => {
+            console.error('Movie details error:', err);
+        });
 
         // Fetch possible reviews of the movie
         getReviews();

@@ -1,0 +1,2 @@
+INSERT INTO "Accounts" (email, password) VALUES ('testi@gmail.com', 123);
+INSERT INTO "Ratings" (mo_id, movie, stars, text, time, ac_id) values (123,'test of rings',3,'testitextia',(SELECT CURRENT_TIMESTAMP AT TIME ZONE 'UTC+5'),6)
