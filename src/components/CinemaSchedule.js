@@ -126,6 +126,7 @@ function CinemaSchedule() {
           time: selectedMovie.dttmShowStart,
           date: new Date(selectedMovie.dttmShowStart).toLocaleDateString('fi-FI'),
           location: selectedMovie.TheatreAndAuditorium,
+          type : 'show',
         },
       ];
 

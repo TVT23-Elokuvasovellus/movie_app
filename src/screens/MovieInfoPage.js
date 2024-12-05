@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../hooks/useAuth';
 import '../styles/MovieInfoPage.css';
+import FetchGroups from '../components/FetchGroups';
+import { useNavigate } from 'react-router-dom';
 
 const token = process.env.REACT_APP_API_TOKEN;
 
@@ -18,6 +20,11 @@ function MovieInfo() {
   const castListRef = useRef(null);
   const { isLoggedIn } = useAuth();
   const reviewsPerPage = 9;
+
+  const [selectedGroup, setSelectedGroup] = useState('');
+  const [selectedGroupName, setSelectedGroupName] = useState('');
+  const [groups, setGroups] = useState([]);
+  const navigate = useNavigate ();
 
   const handleSortChange = (event) => {
     const sortType = event.target.value;
@@ -51,6 +58,19 @@ function MovieInfo() {
   const startIndex = (currentPage - 1) * reviewsPerPage;
   const endIndex = startIndex + reviewsPerPage;
   const currentReviews = reviews.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    const fetchGroupData = async () => {
+      try {
+        const groupsData = await FetchGroups();
+        setGroups(groupsData);
+      } catch (error) {
+        console.error('Error fetching groups:', error);
+      }
+    };
+
+    fetchGroupData();
+  }, []);
 
   useEffect(() => {
     const fetchMovieInfo = async () => {
@@ -103,6 +123,49 @@ function MovieInfo() {
     }
   };
 
+  const handleGroupChange = (event) => {
+    setSelectedGroup(event.target.value);
+    const group = groups.find(group => group.ID === event.target.value);
+    setSelectedGroupName(group ? group.name : '');
+  };
+
+  const handleShare = async () => {
+    if (!selectedGroup) {
+      console.error("Please select a group before sharing.");
+      alert("Select a group.");
+      return;
+    }
+      const postData = [
+        {
+          title: movieInfo?.title,
+          img: `https://image.tmdb.org/t/p/w342${movieInfo?.poster_path}`,
+          type : 'movie',
+        },
+      ];
+
+      const token = localStorage.getItem('authToken');
+        try {
+            const response = await fetch(`http://localhost:3001/group/${selectedGroup}/addMovie`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`, 
+                },
+                body: JSON.stringify({ sharedMovie: postData[0] }), 
+            });
+            const data = await response.json();
+              if (response.ok && data.success) {
+                navigate(`/group/${selectedGroup}`, { 
+                    state: { id: selectedGroup, name: selectedGroupName, sharedMovie: postData[0] } 
+                });
+            } else {
+                console.error('Failed to share movie:', data.error || 'Unknown error');
+            }
+        } catch (err) {
+            console.error('Error while sharing the movie:', err); 
+        }
+  };
+
   return (
     <div className='movie-info-page'>
       <Navbar isLoggedIn={isLoggedIn} />
@@ -125,7 +188,17 @@ function MovieInfo() {
             )}
           </div>
         </div>
-          
+        <div>
+          <select value={selectedGroup} onChange={handleGroupChange}>
+            <option value="">Select a group</option>
+              {groups.map(group => (
+                <option key={group.gr_id} value={group.gr_id}>
+                  {group.name}
+                </option>
+              ))}
+          </select>
+          <button onClick={handleShare}>Share to group</button>
+        </div>
         <div className="cast-section">
           <h3>Cast</h3>
           <div className="cast-scroller">
