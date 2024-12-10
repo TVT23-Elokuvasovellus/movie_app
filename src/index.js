@@ -20,6 +20,7 @@ import GroupsPage from './screens/GroupsPage';
 import Showtimes from './screens/ShowtimesPage'
 import MovieInfo from './screens/MovieInfoPage';
 import { useAuth } from './hooks/useAuth';
+import Movie from './components/Movie';
 
 const App = () => {
   const { isLoggedIn, userId } = useAuth();
@@ -51,15 +52,11 @@ const App = () => {
           element: <ProfilePage isLoggedIn={isLoggedIn} userId={userId} />
         },
         {
-          path: "/group/:id", 
+          path: "/group/:id",
           element: <GroupPage isLoggedIn={isLoggedIn} />
         },
         {
           path: "movie/:id",
-          element: <Review isLoggedIn={isLoggedIn} />
-        },
-        {
-          path: "/movieinfo/:movieId",
           element: <MovieInfo isLoggedIn={isLoggedIn} />
         },
         {

@@ -10,7 +10,7 @@ router.get('/reviews', async (req, res) => {
         if (movie) {
             result = await pool.query('SELECT * FROM "Ratings" WHERE movie = $1', [movie]);
         } else {
-            result = await pool.query('SELECT * FROM "Ratings"');
+            result = await pool.query('select "Accounts".email,"Ratings".stars, "Ratings".text, "Ratings".time, "Ratings".mo_id, "Ratings".movie from "Ratings" inner join "Accounts" on "Ratings".ac_id="Accounts".ac_id');
         }
         res.json(result.rows);
     } catch (error) {

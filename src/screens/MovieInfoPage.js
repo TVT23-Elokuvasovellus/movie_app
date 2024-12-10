@@ -2,15 +2,28 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../hooks/useAuth';
+import axios from 'axios';
 import '../styles/MovieInfoPage.css';
+import { eventWrapper } from '@testing-library/user-event/dist/utils';
 import FetchGroups from '../components/FetchGroups';
 import { useNavigate } from 'react-router-dom';
 
+
+const url = 'http://localhost:3001'
 const token = process.env.REACT_APP_API_TOKEN;
+
+const options = {
+  method: 'GET',
+  headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${token}`
+  }
+};
 
 function MovieInfo() {
   const location = useLocation();
-  const movieId = location.pathname.split('/').pop();
+  const movieId = (location.pathname.toString()).slice(7);
+  console.log(movieId);
   const [movieInfo, setMovieInfo] = useState(null);
   const [error, setError] = useState(null);
   const [actors, setActors] = useState([]);
@@ -18,8 +31,40 @@ function MovieInfo() {
   const [selectedSort, setSelectedSort] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const castListRef = useRef(null);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
   const reviewsPerPage = 9;
+
+  const getReviews = () =>{
+    console.log("Get Reviews: ");
+    axios.get(url + '/movie/'+ movieId)
+    .then(response => {
+        setReviews(response.data)
+        console.log(response.data)
+    }).catch(err => {
+      console.error('Error trying to get reviews: ', err);
+    })
+  }
+
+  const addReview = (event) =>{
+    event.preventDefault();
+    console.log("Addreview wohoo!", movieInfo?.title);
+    axios.post(url + '/movie/' + movieId +'/create', {
+        movieName: movieInfo?.title,
+        stars: event.currentTarget.elements.stars.value,
+        text: event.currentTarget.elements.review.value,
+        account: user?.id
+    }).catch(err => {
+      console.error('Error trying to add a review: ', err);
+    })
+  }
+
+const deleteReview = () =>{
+    axios.delete(url + '/movie/' + movieId + '/delete', {
+        account: user?.id
+    }).catch(err => {
+      console.error('Error trying to delete review: ', err);
+    })
+  }
 
   const [selectedGroup, setSelectedGroup] = useState('');
   const [selectedGroupName, setSelectedGroupName] = useState('');
@@ -78,29 +123,31 @@ function MovieInfo() {
         if (!movieId) {
           throw new Error('Movie ID is missing');
         }
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${token}`);
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch movie details');
-        }
-        const data = await response.json();
-        setMovieInfo(data);
+        const searchUrlMovie = `https://api.themoviedb.org/3/movie/${movieId}?api_key=API_KEY`
+        fetch(searchUrlMovie, options)
+        .then(res => res.json())
+        .then(json => {
+            setMovieInfo(json);
+            console.log(json);
+        })
+        .catch(err => {
+            console.error('Movie details error:', err);
+        });
 
         // Fetch actors
-        const actorsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${token}`);
-        if (!actorsResponse.ok) {
-          throw new Error('Failed to fetch movie actors');
-        }
-        const actorsData = await actorsResponse.json();
-        setActors(actorsData.cast);
+        const searchUrlActors = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=API_KEY`
+        fetch(searchUrlActors, options)
+        .then(res => res.json())
+        .then(json => {
+            setActors(json.cast);
+            console.log(json.cast);
+        })
+        .catch(err => {
+            console.error('Movie details error:', err);
+        });
 
         // Fetch possible reviews of the movie
-        const reviewsResponse = await fetch(`http://localhost:3001/reviews?movie=${data.title}`);
-        if (!reviewsResponse.ok) {
-          throw new Error('Failed to fetch movie reviews');
-        }
-        const reviewsData = await reviewsResponse.json();
-        setReviews(reviewsData);
+        getReviews();
       } catch (error) {
         setError(error.message);
       }
@@ -231,7 +278,7 @@ function MovieInfo() {
             {currentReviews.length > 0 ? (
               currentReviews.map(review => (
                 <div key={review.ra_id} className = 'review'>
-                  <p><strong>{review.author}</strong></p>
+                  <p><strong>{review.email}</strong></p>
                   <p>{review.text}</p>
                   <p>{review.stars} stars</p>
                   <p>{new Date(review.time).toLocaleDateString()}</p>
@@ -241,6 +288,19 @@ function MovieInfo() {
               <p>No reviews available.</p>
             )}
         </div>
+            {isLoggedIn ? (
+            <form onSubmit={addReview}>
+                <label for="stars">Stars: </label>
+                <input type='number' id="stars" name="stars" min="0" max="5"></input>
+                <br/>
+                <label for="review">Review: </label>
+                <input type="text" id="review" name='review'/>
+                <br/>
+                <input type='submit'/>
+            </form>
+            ) : (
+                <p>Log in to write a review.</p>
+            )}
         </div>
         <div className="pagination">
           <button onClick={() => handlePageChange (currentPage - 1)} disabled={currentPage === 1}>Back</button>

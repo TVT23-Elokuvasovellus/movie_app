@@ -2,9 +2,9 @@ import { insertReview, selectMovieReviewsById, removeReview } from "../models/mo
 
 const postReview = async (req,res,next) => {
     try {
-        const movie = parseString(req.params.movie)
-        const result = await insertReview(movie, req.body.stars, req.body.text, req.body.account)
-
+        const movie = req.params.movie
+        const result = await insertReview(movie, req.body.movieName, req.body.stars, req.body.text, req.body.account)
+        return res.status(200).json(result) 
     } catch(error) {
         return next(error)
     }
