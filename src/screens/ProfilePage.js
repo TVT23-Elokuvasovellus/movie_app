@@ -15,6 +15,8 @@ function ProfilePage() {
   const [isSure, setIsSure] = useState(false);
   const [showDeleteForm, setShowDeleteForm] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const [isPublic, setIsPublic] = useState(false);
+  const [visibilityMessage, setVisibilityMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,17 +28,64 @@ function ProfilePage() {
   const fetchFavorites = async (userId) => {
     try {
       const response = await axios.get(`http://localhost:3001/favorites?user_id=${userId}`);
+      console.log('Fetched favorites:', response.data);
       setFavorites(response.data);
     } catch (err) {
       console.error('Error fetching favorites:', err);
     }
   };
 
-  useEffect(() => {
-    if (isOwnProfile && user) {
-      fetchFavorites(user.id);
+  const setPublic = async (userId, publicStatus) => {
+    try {
+      const response = await axios.put(`http://localhost:3001/setPublic`, {
+        userId,
+        publicFavorites: publicStatus,
+      });
+      if (response.data.success) {
+        setIsPublic(publicStatus);
+        setVisibilityMessage(publicStatus ? 'Your favorites are now visible to other users' : '');
+        fetchFavorites(userId);
+      } else {
+        setMessage(response.data.message);
+      }
+    } catch (err) {
+      console.error(`Error ${publicStatus ? 'setting' : 'hiding'} public favorites:`, err);
+      setMessage('An error occurred while updating the public status of favorites.');
     }
-  }, [isOwnProfile, user]);
+  };
+
+  const checkIfPublic = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/checkPublic?user_id=${userId}`);
+      setIsPublic(response.data.publicFavorites);
+      if (response.data.publicFavorites) {
+        fetchFavorites(userId);
+      }
+    } catch (err) {
+      console.error('Error checking if favorites are public:', err);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      if (isOwnProfile) {
+        fetchFavorites(user.id);
+        checkIfPublic(user.id);
+      } else {
+        checkIfPublic(id).then(() => {
+          if (isPublic) {
+            fetchFavorites(id);
+          }
+        });
+      }
+    } else {
+      checkIfPublic(id).then(() => {
+        if (isPublic) {
+          fetchFavorites(id);
+        }
+      });
+    }
+  }, [isOwnProfile, user, id]);
 
   const handleDeleteAccount = async (e) => {
     e.preventDefault();
@@ -105,10 +154,27 @@ function ProfilePage() {
               </form>
             </div>
           )}
-          <MovieList movies={favorites.map(fav => fav.movie)} /> {/* Use fetched data */}
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              setPublic(user.id, !isPublic);
+              setIsPublic(!isPublic);
+              setVisibilityMessage(!isPublic ? 'Your favorites are now visible to other users' : '');
+            }}
+          >
+            {isPublic ? 'Hide Favorites' : 'Publish Favorites'}
+          </button>
+          {visibilityMessage && <p className="visibility-message">{visibilityMessage}</p>}
+          <MovieList movies={favorites} fetchFavorites={fetchFavorites} user={user} isOwnProfile={isOwnProfile} />
         </>
       ) : (
-        <p className="profile-page-text">You are viewing someone else's profile.</p>
+        <>
+          {isPublic ? (
+            <MovieList movies={favorites} fetchFavorites={fetchFavorites} user={{ id }} isOwnProfile={isOwnProfile} />
+          ) : (
+            <p className="profile-page-text">This user's favorites are private.</p>
+          )}
+        </>
       )}
     </div>
   );

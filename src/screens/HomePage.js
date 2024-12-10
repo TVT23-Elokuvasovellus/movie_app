@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Search from '../components/Search';
 import ReviewList from '../components/ReviewList';
+import PublicFavoritesList from '../components/PublicProfiles'
 import '../styles/HomePage.css';
 
 const HomeScreen = ({ isDarkMode, isLoggedIn }) => {
@@ -16,6 +17,9 @@ const HomeScreen = ({ isDarkMode, isLoggedIn }) => {
             </div>
             <div className="review-list-container">
               <ReviewList />
+            </div>
+            <div>
+              <PublicFavoritesList />
             </div>
           </div>
         </div>
