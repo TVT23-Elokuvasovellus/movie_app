@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import { useAuth } from '../hooks/useAuth';
 import axios from 'axios';
 import '../styles/MovieInfoPage.css';
+import { eventWrapper } from '@testing-library/user-event/dist/utils';
 
 const url = 'http://localhost:3001'
 const token = process.env.REACT_APP_API_TOKEN;
@@ -31,6 +32,7 @@ function MovieInfo() {
   const reviewsPerPage = 9;
 
   const getReviews = () =>{
+    console.log("Get Reviews: ");
     axios.get(url + '/movie/'+ movieId)
     .then(response => {
         setReviews(response.data)
@@ -40,12 +42,13 @@ function MovieInfo() {
     })
   }
 
-  const addReview = () =>{
-    console.log("Addreview wohoo!");
+  const addReview = (event) =>{
+    event.preventDefault();
+    console.log("Addreview wohoo!", movieInfo?.title);
     axios.post(url + '/movie/' + movieId +'/create', {
-        stars: "stars",
-        text: "text",
-        time: "time",
+        movieName: movieInfo?.title,
+        stars: event.currentTarget.elements.stars.value,
+        text: event.currentTarget.elements.review.value,
         account: user?.id
     }).catch(err => {
       console.error('Error trying to add a review: ', err);
@@ -201,7 +204,7 @@ const deleteReview = () =>{
             {currentReviews.length > 0 ? (
               currentReviews.map(review => (
                 <div key={review.ra_id} className = 'review'>
-                  <p><strong>{review.author}</strong></p>
+                  <p><strong>{review.email}</strong></p>
                   <p>{review.text}</p>
                   <p>{review.stars} stars</p>
                   <p>{new Date(review.time).toLocaleDateString()}</p>
@@ -211,6 +214,19 @@ const deleteReview = () =>{
               <p>No reviews available.</p>
             )}
         </div>
+            {isLoggedIn ? (
+            <form onSubmit={addReview}>
+                <label for="stars">Stars: </label>
+                <input type='number' id="stars" name="stars" min="0" max="5"></input>
+                <br/>
+                <label for="review">Review: </label>
+                <input type="text" id="review" name='review'/>
+                <br/>
+                <input type='submit'/>
+            </form>
+            ) : (
+                <p>Log in to write a review.</p>
+            )}
         </div>
         <div className="pagination">
           <button onClick={() => handlePageChange (currentPage - 1)} disabled={currentPage === 1}>Back</button>
