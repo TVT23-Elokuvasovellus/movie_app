@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS public."Accounts"
     ac_id SERIAL NOT NULL,
     email character varying(255) COLLATE pg_catalog."default" NOT NULL,
     password character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    public_favorites BOOLEAN DEFAULT FALSE,
     CONSTRAINT "Accounts_pkey" PRIMARY KEY (ac_id)
 );
 
