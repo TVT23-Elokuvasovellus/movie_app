@@ -61,6 +61,8 @@ CREATE TABLE IF NOT EXISTS public."Shared"
     ac_id INTEGER NOT NULL,
     gr_id INTEGER NOT NULL,
     title VARCHAR(255) NOT NULL, 
+    type VARCHAR(255) NOT NULL,
+    img VARCHAR(255),
     location VARCHAR(255), 
     time TIMESTAMP, 
     date DATE,

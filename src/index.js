@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { pingServer } from './pingServer';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // for Bootstrap's JS components:
@@ -26,6 +27,10 @@ const App = () => {
   const [isDarkMode] = useState(() => {
     return localStorage.getItem('isDarkMode') === 'true';
   });
+
+  useEffect(() => {
+    pingServer();
+  }, []);  
 
   return (
     <div className={`root-container ${isDarkMode ? 'dark-mode' : ''}`}>
