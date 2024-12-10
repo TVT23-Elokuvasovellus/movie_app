@@ -31,6 +31,16 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.post('/logout', (req, res) => {
+    const token = req.headers['x-access-token'] || req.body.token || req.query.token;
+    if (!token) {
+        console.log('Logout attempt without token');
+        return res.status(400).json({ success: false, message: 'No token provided' });
+    }
+    console.log('User logged out with token:', token);
+    res.json({ success: true, message: 'Logged out successfully' });
+});
+
 router.post('/signup', async (req, res) => {
     const { email, password } = req.body;
 

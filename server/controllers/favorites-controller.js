@@ -27,6 +27,17 @@ export const addFavorite = async (req, res) => {
   }
 
   try {
+    const checkResult = await pool.query(
+      'SELECT * FROM "Favorites" WHERE ac_id = $1 AND mo_id = $2',
+      [ac_id, mo_id]
+    );
+
+    if (checkResult.rows.length > 0) {
+      const errorMsg = `Error inserting movie "${movie}" (mo_id: ${mo_id}) into the favorite list of user (ac_id: ${ac_id}), already exists.`;
+      console.error(errorMsg);
+      return res.status(409).json({ error: 'Movie is already in favorites' });
+    }
+
     const result = await pool.query(
       'INSERT INTO "Favorites" (ac_id, mo_id, movie) VALUES ($1, $2, $3) RETURNING *',
       [ac_id, mo_id, movie]
