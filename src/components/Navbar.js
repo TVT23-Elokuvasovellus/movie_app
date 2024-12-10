@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth'; // Make sure this path is correct
 import Notifications from './Notifications';
 import '../styles/Navbar.css';
 
-const Navbar = ({ isLoggedIn }) => {
+const Navbar = () => {
+    const { isLoggedIn, logout } = useAuth();
     const [isDarkMode, setIsDarkMode] = useState(() => {
         return localStorage.getItem('isDarkMode') === 'true';
     });
@@ -25,12 +27,6 @@ const Navbar = ({ isLoggedIn }) => {
         setIsDarkMode(newMode);
         document.body.classList.toggle('dark-mode', newMode);
         localStorage.setItem('isDarkMode', newMode);
-    };
-
-    const handleLogout = () => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userId');
-        window.location.reload();
     };
 
     const username = localStorage.getItem('email');
@@ -76,7 +72,7 @@ const Navbar = ({ isLoggedIn }) => {
                 <div className="navbar-right">
                     {isLoggedIn ? (
                         <span>
-                            Logged In As: {username} <button onClick={handleLogout}>Log Out</button>
+                            Logged In As: {username} <button onClick={logout}>Log Out</button>
                         </span>
                     ) : (
                         <>
@@ -95,4 +91,3 @@ const Navbar = ({ isLoggedIn }) => {
 };
 
 export default Navbar;
-
