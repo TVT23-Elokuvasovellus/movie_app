@@ -116,6 +116,7 @@ function GroupPage() {
       });
       if (response.ok) {
         const data = await response.json();
+        window.location.reload();
         setMessage2(data.message);
       } else {
         const data = await response.json();
@@ -127,41 +128,73 @@ function GroupPage() {
   };
 
   return message ? (
-    <div>
+    <div className="container text-center mt-5">
       {message}
       <div>
-        <Link to="/">Back to home</Link>
+        <Link to="/" className="btn btn-secondary mb-3">Back to home</Link>
       </div>
-      <h2>Group: {groupName}</h2>
-      <button onClick={() => sendGroupInvite(groupId)}>Request Invite</button>
+      <h2 className="mt-4">Group: {groupName}</h2>
+      <button className="btn btn-success mt-3" onClick={() => sendGroupInvite(groupId)}>Request Invite</button>
     </div>
   ) : (
-    <div className="group-page">
-      <Navbar isLoggedIn={isLoggedIn} />
-      <div className="group-content">
-        <h2>Group: {groupName}</h2>
-        <button onClick={deleteGroup}>Delete Group</button>
-        {message2 && <p>{message2}</p>}
-        <GroupMembers groupId={groupId} /> {/* Add MembersList */}
-        <h3>Pending Requests</h3>
-        {pendingMembers.length > 0 ? (
-        <div>
-          <ul>
-            {pendingMembers.map((member) => (
-              <li key={member.member}>
-                User: {member.email}
-                <button onClick={() => respondGroupInvite(member.member, 'accept')}>+</button>
-                <button onClick={() => respondGroupInvite(member.member, 'reject')}>-</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-          ) : (
-            <p>No pending requests.</p>
-          )}
-      <GroupShare/>
+    <div>
+  <Navbar isLoggedIn={isLoggedIn} />
+  <div className="container">
+    <div className="group-content">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1>Group: {groupName}</h1>
+        <button className="btn btn-danger" onClick={deleteGroup}>
+          Delete Group
+        </button>
       </div>
+
+      {message2 && <p>{message2}</p>}
+      <div className="row">
+        <div className="col-lg-6">
+            <div className="card-body">
+              <GroupMembers groupId={groupId} />
+            </div>
+        </div>
+        <div className="col-lg-6">
+          <div>
+            <div className="card-body">
+              <h3 className="text-nowrap">Pending Requests</h3>
+              {pendingMembers.length > 0 ? (
+                <ul className="list-group">
+                  {pendingMembers.map((member) => (
+                    <li
+                      key={member.member}
+                      className="list-group-item d-flex justify-content-between align-items-center"
+                    >
+                      {member.email}
+                      <div>
+                        <button
+                          className="btn btn-success btn-sm me-2"
+                          onClick={() => respondGroupInvite(member.member, 'accept')}
+                        >
+                          Accept
+                        </button>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => respondGroupInvite(member.member, 'reject')}
+                        >
+                          Reject
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No pending requests.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+        <GroupShare />
     </div>
+  </div>
+</div>
   );
 }
 

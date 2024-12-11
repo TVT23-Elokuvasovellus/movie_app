@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-
+import '../styles/GroupPage.css';
 const GroupShare = () => {
     const location = useLocation();
     const { id, sharedMovie } = location.state || {}; 
@@ -66,43 +66,77 @@ const GroupShare = () => {
       }
     }, [id]);
 
+    const formatDate = (date) => {
+      const d = new Date(date);
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0'); 
+      const year = d.getFullYear();
+      return `${day}.${month}.${year}`;
+    };
+    const formatTime = (date) => {
+      const d = new Date(date);
+      const hours = String(d.getHours()).padStart(2, '0');
+      const minutes = String(d.getMinutes()).padStart(2, '0');
+      return `${hours}:${minutes}`;
+    };
+
       return (
-        <div>
-          <h3>Shared Shows:</h3>
-          {error && <p>{error}</p>}
-          <ul>
-            {sharedShows.length > 0 ? (
-              sharedShows.map(show => (
-                <li key={show.sh_id}>
-                  <strong>{show.title}</strong>
-                  <p>{show.location}</p>
-                    <p>Date: {show.date} Time: {show.time}</p>
-                  <p>Shared by: {show.email} - {show.shared_at}</p>
-                </li>
-              ))
-            ) : (
-              <p>No shows shared yet.</p>
-            )}
-          </ul>
-          <div>
-            <h3>Shared Movies:</h3>
-            {error && <p>{error}</p>}
-            <ul>
-              {sharedMovies.length > 0 ? (
-                sharedMovies.map(movie => (
-                  <li key={movie.sh_id}>
-                    <strong>{movie.title}</strong>
-                    {movie.img && <img src={movie.img} alt={movie.title} />}
-                    <p>Shared by: {movie.email} - {movie.shared_at}</p>
-                  </li>
-                ))
-              ) : (
-                <p>No movies shared yet.</p>
-              )}
-            </ul>
-          </div>
-        </div>
-        
+<div className="shared-content">
+    <div className="section">
+      <h3>Shared Shows:</h3>
+      {error && <p className="text-danger">{error}</p>}
+      <div className="row">
+        {sharedShows.length > 0 ? (
+          sharedShows.map((show) => (
+            <div key={show.sh_id} className="col-md-6 mb-4">
+              <div className="card shadow-sm">
+                <div className="card-body">
+                  <h5 className="card-title">{show.title}</h5>
+                  <p className="card-text">
+                    Location: {show.location}
+                    <br />
+                    Date: {formatDate(show.date)} <br /> Time: {formatTime(show.time)}
+                  </p>
+                  <p>Shared by: {show.email} <br /> {formatDate(show.shared_at)} - {formatTime(show.shared_at)}</p>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No shows shared yet.</p>
+        )}
+      </div>
+    </div>
+    <div className="section">
+      <h3>Shared Movies:</h3>
+      {error && <p className="text-danger">{error}</p>}
+      <div className="row">
+        {sharedMovies.length > 0 ? (
+          sharedMovies.map((movie) => (
+            <div key={movie.sh_id} className="col-md-6 mb-4">
+              <div className="card shadow-sm">
+                {movie.img && (
+                  <img
+                    src={movie.img}
+                    className="card-img-top"
+                    alt={movie.title}
+                  />
+                )}
+                <div className="card-body">
+                  <h5 className="card-title">{movie.title}</h5>
+                  <p className="text-muted">
+                    Shared by: {movie.email} on {movie.shared_at}
+                  </p> 
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No movies shared yet.</p>
+        )}
+      </div>
+    </div>
+  </div>  
       );
     };
   
