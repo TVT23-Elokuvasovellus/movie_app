@@ -275,7 +275,7 @@ const deleteReview = () =>{
             </select>
           </div>
           <div className = 'reviews-grid'>
-            {currentReviews.length > 0 ? (
+            {currentReviews.length > 0 && typeof currentReviews !== 'undefined' && typeof currentReviews !== null ? (
               currentReviews.map(review => (
                 <div key={review.ra_id} className = 'review'>
                   <p><strong>{review.email}</strong></p>
