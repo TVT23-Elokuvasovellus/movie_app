@@ -235,29 +235,40 @@ const deleteReview = () =>{
             )}
           </div>
         </div>
+        {isLoggedIn ? (
         <div>
           <select value={selectedGroup} onChange={handleGroupChange}>
             <option value="">Select a group</option>
-              {groups.map(group => (
+            {groups !== null && typeof groups !== 'undefined' ? (
+              groups.map(group => (
                 <option key={group.gr_id} value={group.gr_id}>
                   {group.name}
                 </option>
-              ))}
+              ))) : (
+                <p>Groups could no be loaded.</p>
+              )}
           </select>
           <button onClick={handleShare}>Share to group</button>
         </div>
+        ) : (
+          <p>Login to share this movie.</p>
+        )}
         <div className="cast-section">
           <h3>Cast</h3>
           <div className="cast-scroller">
             <button onClick={scrollLeft} className="scroll-button">{'<'}</button>
             <div className="cast-list" ref={castListRef}>
-              {actors.map(actor => (
+              {actors !== null && typeof actors !== 'undefined' ? (
+              actors.map(actor => (
                 <div key={actor.cast_id} className="actor">
                   <img src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`} alt={actor.name} />
                   <p><strong>{actor.name}</strong></p>
                   <p>{actor.character}</p>
                 </div>
-              ))}
+              ))
+            ) :  (
+              <p>Actors not found.</p>
+            )}
             </div>
             <button onClick={scrollRight} className="scroll-button">{'>'}</button>
           </div>
@@ -275,7 +286,7 @@ const deleteReview = () =>{
             </select>
           </div>
           <div className = 'reviews-grid'>
-            {currentReviews.length > 0 && typeof currentReviews !== 'undefined' && typeof currentReviews !== null ? (
+            {currentReviews.length > 0 && typeof currentReviews !== 'undefined' && currentReviews !== null ? (
               currentReviews.map(review => (
                 <div key={review.ra_id} className = 'review'>
                   <p><strong>{review.email}</strong></p>
