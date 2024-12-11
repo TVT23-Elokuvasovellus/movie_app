@@ -1,10 +1,8 @@
 .container {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .movie-list {
@@ -12,75 +10,72 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
   justify-items: center;
-  margin: 20px 0;
 }
 
-.movie-item {
+.result-card {
   position: relative;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 180px;
+  width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  min-height: 300px;
+  min-height: 350px;
+  transition: transform 0.3s ease;
 }
 
-.movie-item img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
-
-.movie-item h3 {
-  font-size: 14px;
-  margin: 10px;
-  text-align: center;
-  color: #007BFF;
-}
-
-.movie-item:hover {
+.result-card:hover {
   transform: translateY(-10px);
 }
 
-.movie-item .default-img {
+.result-card h2 {
+  font-size: 16px;
+  margin: 10px;
+  text-align: center;
+  color: #007BFF;
+  height: 60px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.result-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.result-card .default-img {
   width: 100%;
   height: auto;
-  object-fit: cover; 
-  display: block; 
+  object-fit: cover;
+  display: block;
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
-  gap: 10px;
+.result-card:hover .remove-favorite-button {
+  display: block;
 }
 
-.pagination button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007BFF;
+.remove-favorite-button {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 6px 10px;
+  background-color: rgba(0, 123, 255, 0.9);
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 5px 0;
 }
 
-.pagination button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.pagination button:hover:enabled {
-  background-color: #0056b3;
-}
-
-.pagination span {
-  font-size: 16px;
+.remove-favorite-button:hover {
+  background-color: rgba(0, 86, 179, 0.9);
 }

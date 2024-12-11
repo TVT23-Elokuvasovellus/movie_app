@@ -131,11 +131,11 @@ header label {
     display: block; 
 }
 
-.result-card:hover .add-favourite-button {
+.result-card:hover .add-favorite-button {
     display: block;
 }
 
-.add-favourite-button {
+.add-favorite-button {
     display: none;
     position: absolute;
     top: 50%;
@@ -151,7 +151,7 @@ header label {
     margin: 5px 0;
 }
 
-.add-favourite-button:hover {
+.add-favorite-button:hover {
     background-color: rgba(0, 86, 179, 0.9);
 }
 
