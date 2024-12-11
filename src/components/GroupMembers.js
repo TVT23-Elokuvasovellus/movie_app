@@ -58,8 +58,8 @@ function GroupMembers({ groupId }) {
         <ul>
           {members.map((member) => (
             <li key={member.member_id}>
-              <div>Email: {member.email}
-              <button onClick={() => deleteMember(member.member_id)}>Remove Member</button>
+              <div>User: {member.email}
+              <button className="btn btn-danger btn-sm" onClick={() => deleteMember(member.member_id)}>Remove Member</button>
               </div>
             </li>
           ))}
