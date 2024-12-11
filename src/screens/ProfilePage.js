@@ -121,6 +121,18 @@ function ProfilePage() {
       <Navbar isLoggedIn={isLoggedIn} />
       {isOwnProfile ? (
         <>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              setPublic(user.id, !isPublic);
+              setIsPublic(!isPublic);
+              setVisibilityMessage(!isPublic ? 'Your favorites are now visible to other users' : '');
+            }}
+          >
+            {isPublic ? 'Hide Favorites' : 'Publish Favorites'}
+          </button>
+          {visibilityMessage && <p className="visibility-message">{visibilityMessage}</p>}
+          <MovieList movies={favorites} fetchFavorites={fetchFavorites} user={user} isOwnProfile={isOwnProfile} />
           <button className="btn btn-danger delete-account-btn" onClick={() => setShowDeleteForm(true)}>
             Account Deletion
           </button>
@@ -154,18 +166,6 @@ function ProfilePage() {
               </form>
             </div>
           )}
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              setPublic(user.id, !isPublic);
-              setIsPublic(!isPublic);
-              setVisibilityMessage(!isPublic ? 'Your favorites are now visible to other users' : '');
-            }}
-          >
-            {isPublic ? 'Hide Favorites' : 'Publish Favorites'}
-          </button>
-          {visibilityMessage && <p className="visibility-message">{visibilityMessage}</p>}
-          <MovieList movies={favorites} fetchFavorites={fetchFavorites} user={user} isOwnProfile={isOwnProfile} />
         </>
       ) : (
         <>

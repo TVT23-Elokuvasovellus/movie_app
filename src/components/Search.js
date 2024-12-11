@@ -105,7 +105,7 @@ function Search() {
         fetchResults(popularMoviesUrl, 'popular');
     };
 
-    const handleAddFavourite = (movie) => {
+    const handleAddFavorite = (movie) => {
         const payload = {
             ac_id: user?.id,
             mo_id: movie.id,
@@ -128,10 +128,10 @@ function Search() {
             return response.json();
         })
         .then(data => {
-            console.log(`Added ${data.movie} to favourites`);
+            console.log(`Added ${data.movie} to favorites`);
         })
         .catch(error => {
-            console.error('Error adding to favourites:', error);
+            console.error('Error adding to favorites:', error);
         });
     };
 
@@ -220,7 +220,7 @@ function Search() {
                                 }
                             }} 
                         />
-                        <button className="add-favourite-button" onClick={() => handleAddFavourite(item)}>Add To Favourites</button>
+                        <button className="add-favorite-button" onClick={() => handleAddFavorite(item)}>Add To Favorites</button>
                     </div>
                 ))}
             </div>

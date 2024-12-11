@@ -1,14 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import '../styles/MovieList.css';
 
 const apiKey = process.env.REACT_APP_API_TOKEN;
 const fetchPosterUrl = (mo_id) => `https://api.themoviedb.org/3/movie/${mo_id}?api_key=${apiKey}`;
 
 function MovieList({ movies, fetchFavorites, user, isOwnProfile }) {
   const [movieData, setMovieData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const moviesPerPage = 5;
+  const moviesPerPage = 10;
+
+  const fetchMovieData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await Promise.all(
+        movies.map(async (movie) => {
+          const res = await axios.get(fetchPosterUrl(movie.mo_id));
+          return { ...movie, poster_path: res.data.poster_path };
+        })
+      );
+      const sortedData = data.sort((a, b) => a.movie.localeCompare(b.movie));
+      setMovieData(sortedData);
+    } catch (err) {
+      setError('Error fetching movie data');
+      console.error('Error fetching movie data:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [movies]);
+
+  useEffect(() => {
+    fetchMovieData();
+  }, [movies, fetchMovieData]);
 
   const handleRemoveFavorite = async (movieId) => {
     console.log(`Attempting to remove movie with id: ${movieId} for user: ${user.id}`);
@@ -27,52 +53,41 @@ function MovieList({ movies, fetchFavorites, user, isOwnProfile }) {
     }
   };
 
-  const fetchMovieData = async () => {
-    try {
-      const data = await Promise.all(
-        movies.map(async (movie) => {
-          const res = await axios.get(fetchPosterUrl(movie.mo_id));
-          return { ...movie, poster_path: res.data.poster_path };
-        })
-      );
-      setMovieData(data);
-    } catch (err) {
-      console.error('Error fetching movie data:', err);
-    }
-  };
-
-  useEffect(() => {
-    fetchMovieData();
-  }, [movies]);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
   const currentMovies = movieData.slice(indexOfFirstMovie, indexOfLastMovie);
+  const totalPages = Math.ceil(movieData.length / moviesPerPage);
 
   return (
     <div className="container">
-      <div className="movie-list">
-        {currentMovies && currentMovies.length > 0 ? (
-          currentMovies.map((movie) => (
-            <div key={movie.mo_id} className="movie-item">
+      <div className="movie-list results">
+        {loading && <p>Loading...</p>}
+        {error && <p className="error">{error}</p>}
+        {!loading && !error && currentMovies.length > 0 ? (
+          currentMovies.map((movie, index) => (
+            <div key={index} className="result-card">
               <Link to={`/movie/${movie.mo_id}`} className="movie-title">
-                <h3>{movie.movie}</h3>
+                <h2>{movie.movie}</h2>
               </Link>
               <img 
-                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} 
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
                 alt={movie.movie} 
                 onError={(e) => { 
-                  e.target.onerror = null; 
-                  e.target.src = "/img/default.JPG"; 
-                  e.target.classList.add('default-img');
+                  if (!e.target.src.includes('default.JPG')) {
+                    e.target.onerror = null;
+                    e.target.src = "/img/default.JPG";
+                    e.target.classList.add('default-img');
+                  }
                 }} 
               />
               {isOwnProfile && (
-                <button
-                  className="btn btn-danger"
+                <button 
+                  className="remove-favorite-button" 
                   onClick={() => handleRemoveFavorite(movie.mo_id)}
                 >
-                  Delete
+                  Remove Favorite
                 </button>
               )}
             </div>
@@ -82,19 +97,11 @@ function MovieList({ movies, fetchFavorites, user, isOwnProfile }) {
         )}
       </div>
       <div className="pagination">
-        <button
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>Page {currentPage} of {Math.ceil(movieData.length / moviesPerPage)}</span>
-        <button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === Math.ceil(movieData.length / moviesPerPage)}
-        >
-          Next
-        </button>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button key={index + 1} onClick={() => paginate(index + 1)}>
+            {index + 1}
+          </button>
+        ))}
       </div>
     </div>
   );
