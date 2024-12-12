@@ -125,7 +125,7 @@ const GroupShare = () => {
                 <div className="card-body">
                   <h5 className="card-title">{movie.title}</h5>
                   <p className="text-muted">
-                    Shared by: {movie.email} on {movie.shared_at}
+                    Shared by: {movie.email} <br /> {formatDate(movie.shared_at)} - {formatTime(movie.shared_at)}
                   </p> 
                 </div>
               </div>

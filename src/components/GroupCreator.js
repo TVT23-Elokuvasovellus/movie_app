@@ -43,33 +43,49 @@ function GroupCreator({ isLoggedIn }) {
     };
 
     return (
-      <div id="group">
-      <h2>Groups</h2>
-      <ul >
-        {groups.map((group) => (
-          <li id="groupLinks" key={group.gr_id}>
-            <Link to={`/group/${group.gr_id}`} state={{ name: group.name, id: group.gr_id }}>{group.name}</Link>
-          </li>
-        ))}
-      </ul>
-      
-      {isLoggedIn ? (
-        <div>
-          <h1>Create a Group</h1>
-          <input
-            type="text"
-            value={groupName}
-            onChange={(e) => setGroupName(e.target.value)}
-            placeholder="Enter group name"
-          />
-          <button onClick={createGroup}>+</button>
-        </div>
-      ) : (
-        <p>Log in to create a group.</p>
-      )}
+      <div className="container mt-4">
+        {isLoggedIn ? (
+          <div className="card p-4 shadow-sm">
+            <h3 className="mb-3">Create a Group</h3>
+            <div className="input-group mb-3">
+              <input
+                type="text"
+                className="form-control"
+                value={groupName}
+                onChange={(e) => setGroupName(e.target.value)}
+                placeholder="Enter group name"
+              />
+              <button className="btn btn-primary" onClick={createGroup}>Add group</button>
+            </div>
+          </div>
+        ) : (
+          <p className="text-muted">Log in to create a group.</p>
+        )}
+    
+        {error && <p className="text-danger mt-3">{error}</p>}
 
-      {error && <p>{error}</p>}
-    </div>
-      );
+        <div>
+          <h2 className="mb-4">Groups</h2>
+          <div className="row">
+            {groups.map((group) => (
+            <div key={group.gr_id} className="col">
+              <div className="card h-100 border-primary shadow">
+                <div className="card-body text-center">
+                  <h5 className="card-title">{group.name}</h5>
+                    <Link
+                      to={`/group/${group.gr_id}`}
+                      state={{ name: group.name, id: group.gr_id }}
+                      className="btn btn-primary w-100"
+                    >
+                      View Group
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
 }
 export default GroupCreator;
