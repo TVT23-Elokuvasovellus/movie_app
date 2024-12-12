@@ -1,19 +1,19 @@
-.btn-primary {
-  background-color: white; /* Primary blue */
-  border-color: black; /* Darker blue for border */
-  color: #0056b3; /* Ensure the text is white */
+.btn-custom {
+  background-color: white; 
+  border-color: black; 
+  color: #0056b3; 
 }
 
-.btn-primary:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  border-color: #003f7f; /* Even darker blue for hover border */
-  color: #ffffff; /* Text remains white */
+.btn-custom:hover {
+  background-color: #0056b3; 
+  border-color: #003f7f; 
+  color: #ffffff;
 }
 
-.btn-primary:focus,
-.btn-primary:active {
+.btn-custom:focus,
+.btn-custom:active {
   outline: none;
-  background-color: #004080; /* Darker focus state */
+  background-color: #004080; 
   border-color: #002850;
-  color: #ffffff; /* Consistent text color */
+  color: #ffffff; 
 }

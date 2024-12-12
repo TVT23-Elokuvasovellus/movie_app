@@ -75,7 +75,7 @@ function GroupCreator({ isLoggedIn }) {
                     <Link
                       to={`/group/${group.gr_id}`}
                       state={{ name: group.name, id: group.gr_id }}
-                      className="btn btn-primary w-100"
+                      className="btn btn-custom w-100"
                     >
                       View Group
                     </Link>
