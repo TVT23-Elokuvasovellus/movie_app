@@ -14,6 +14,10 @@
   margin: 0 auto;
 }
 
+.header {
+  margin-top: 80px;
+}
+
 .movie-info-container {
   display: flex;
   justify-content: center;
@@ -104,6 +108,15 @@
   height: 70%;
   width: 70%;
   border-radius: 10px;
+}
+
+.favorite-button {
+  margin-top: 20px;
+  margin-right: 50px;
+}
+
+.share-button {
+  margin-top: 20px;
 }
 
 .scroll-button {
