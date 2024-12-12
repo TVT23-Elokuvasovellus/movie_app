@@ -237,3 +237,34 @@ header button.dark-mode:hover {
 .pagination button.dark-mode:hover:enabled {
     background-color: #0056b3;
 }
+@media (max-width: 768px) {
+    .results {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .result-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header .search-bar,
+    header .filter-group,
+    header .search-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    header .search-button2 {
+        width: 100%;
+    }
+
+    .results {
+        grid-template-columns: 1fr;
+    }
+}
