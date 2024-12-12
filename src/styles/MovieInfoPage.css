@@ -1,3 +1,4 @@
+
 .movie-info-page {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -76,23 +77,27 @@
 .cast-scroller {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /*justify-content: space-between;
+  position: relative; */
   overflow: hidden;
-  position: relative;
 }
 
 .cast-list {
   display: flex;
+  flex-wrap: nowrap;
   overflow-x: auto;
-  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  /*scroll-behavior: smooth;
   gap: 8px;
-  flex-grow: 1;
-  overflow-x: hidden;
+  flex-grow: 1;*/
 }
 
 .actor {
   flex: 0 0 auto;
+  scroll-snap-align: start;
   text-align: center;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
 .actor img {
@@ -141,4 +146,26 @@
 .dark-mode .review {
   background-color: #444444;
   margin: 10px 0;
+}
+
+@media (max-width: 600px) { 
+  .poster {
+    width: 100%; 
+    order: 1; 
+  } 
+  .movie-info-container { 
+    order: 2; 
+    flex-direction: column; 
+  } 
+  .actor {
+    width: 100vw;
+  }
+  .scroll-button {
+    display: none;
+  }
+  .actor img {
+    height: 60%;
+    width: 60%;
+    border-radius: 10px;
+  }
 }

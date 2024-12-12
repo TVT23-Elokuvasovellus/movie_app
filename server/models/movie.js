@@ -1,7 +1,7 @@
 import { pool } from "../helpers/db.js";
 
 const selectMovieReviewsById = async (movie) => {
-    return await pool.query('select "Accounts".email,"Ratings".stars, "Ratings".text, "Ratings".time from "Ratings" inner join "Accounts" on "Ratings".ac_id="Accounts".ac_id where mo_id=$1', [movie])
+    return await pool.query('select "Accounts".email,"Ratings".ac_id, "Ratings".stars, "Ratings".text, "Ratings".time from "Ratings" inner join "Accounts" on "Ratings".ac_id="Accounts".ac_id where mo_id=$1', [movie])
 }
 
 const insertReview = async (movie, movieName, stars, text, account) => {

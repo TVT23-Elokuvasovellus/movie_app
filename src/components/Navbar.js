@@ -12,7 +12,7 @@ const Navbar = () => {
     const [showNotifications, setShowNotifications] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [notificationsCount, setNotificationsCount] = useState(0);
-
+    const [menuOpen, setMenuOpen] = useState(false);
     useEffect(() => {
         document.body.classList.toggle('dark-mode', isDarkMode);
         trackNotifications();
@@ -27,6 +27,9 @@ const Navbar = () => {
         setIsDarkMode(newMode);
         document.body.classList.toggle('dark-mode', newMode);
         localStorage.setItem('isDarkMode', newMode);
+    };
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
     };
 
     const username = localStorage.getItem('email');
@@ -50,24 +53,29 @@ const Navbar = () => {
         <>
             <nav className="navbar">
                 <div className="navbar-left">
-                    <Link to="/">
-                        <button className="nav-button">Home</button>
-                    </Link>
-                    <Link to="/showtimes">
-                        <button className="nav-button">Showtimes</button>
-                    </Link>
-                    <Link to={`/profile/${userId}`}>
-                        <button className="nav-button">Profile</button>
-                    </Link>
-                    <Link to={"/groups"}>
-                        <button className="nav-button">Groups</button>
-                    </Link>
-                    <button className="nav-button" onClick={handleShowNotifications}>
-                        Notifications ({notificationsCount})
+                    <button className="menu-button" onClick={toggleMenu}>
+                        ☰
                     </button>
-                    <button className="dark-mode-button" onClick={toggleDarkMode}>
-                        {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-                    </button>
+                    <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
+                        <Link to="/">
+                            <button className="nav-button">Home</button>
+                        </Link>
+                        <Link to="/showtimes">
+                            <button className="nav-button">Showtimes</button>
+                        </Link>
+                        <Link to={`/profile/${userId}`}>
+                            <button className="nav-button">Profile</button>
+                        </Link>
+                        <Link to={"/groups"}>
+                            <button className="nav-button">Groups</button>
+                        </Link>
+                        <button className="nav-button" onClick={handleShowNotifications}>
+                            Notifications ({notificationsCount})
+                        </button>
+                        <button className="dark-mode-button" onClick={toggleDarkMode}>
+                            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+                        </button>
+                    </div>
                 </div>
                 <div className="navbar-right">
                     {isLoggedIn ? (
@@ -76,7 +84,7 @@ const Navbar = () => {
                         </span>
                     ) : (
                         <>
-                            <Link to="/login">Log In.</Link> No Account? <Link to="/signup">Sign Up.</Link>
+                            <Link to="/login">Log In</Link> No Account? <Link to="/signup">Sign Up</Link>
                         </>
                     )}
                 </div>
@@ -89,5 +97,6 @@ const Navbar = () => {
         </>
     );
 };
+
 
 export default Navbar;

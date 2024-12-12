@@ -148,6 +148,9 @@ const deleteReview = () =>{
 
         // Fetch possible reviews of the movie
         getReviews();
+        const meta = document.createElement('meta'); meta.name = "viewport"; 
+        meta.content = "width=device-width, initial-scale=1"; 
+        document.getElementsByTagName('head')[0].appendChild(meta);
       } catch (error) {
         setError(error.message);
       }
@@ -161,12 +164,12 @@ const deleteReview = () =>{
 
   const scrollLeft = () => {
     if (castListRef.current) {
-      castListRef.current.scrollBy({left: -800, behavior: 'smooth'});
+      castListRef.current.scrollBy({left: -window.innerWidth, behavior: 'smooth'}); //800
     }
   };
   const scrollRight = () => {
     if (castListRef.current) {
-      castListRef.current.scrollBy({left: 800, behavior: 'smooth'});
+      castListRef.current.scrollBy({left: window.innerWidth, behavior: 'smooth'});
     }
   };
 
@@ -293,7 +296,12 @@ const deleteReview = () =>{
                   <p>{review.text}</p>
                   <p>{review.stars} stars</p>
                   <p>{new Date(review.time).toLocaleDateString()}</p>
-                </div>
+                  {review.ac_id === user?.id ? (
+                  <button onClick={deleteReview}>Delete</button>
+                  ) : (
+                    <p></p>
+                  )}
+                  </div>
               ))
             ) : (
               <p>No reviews available.</p>
