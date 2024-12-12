@@ -123,7 +123,7 @@ const deleteReview = () =>{
         if (!movieId) {
           throw new Error('Movie ID is missing');
         }
-        const searchUrlMovie = `https://api.themoviedb.org/3/movie/${movieId}?api_key=API_KEY`
+        const searchUrlMovie = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${token}`
         fetch(searchUrlMovie, options)
         .then(res => res.json())
         .then(json => {
@@ -135,7 +135,7 @@ const deleteReview = () =>{
         });
 
         // Fetch actors
-        const searchUrlActors = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=API_KEY`
+        const searchUrlActors = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${token}`
         fetch(searchUrlActors, options)
         .then(res => res.json())
         .then(json => {
