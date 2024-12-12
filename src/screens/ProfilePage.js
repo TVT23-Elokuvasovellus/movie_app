@@ -35,6 +35,17 @@ function ProfilePage() {
     }
   };
 
+  const fetchEmail = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/api/email?user_id=${userId}`); // Updated route
+      setEmail(response.data.email || 'User');
+      document.title = `Favorites List of User: ${response.data.email || 'User'}`;
+    } catch (err) {
+      console.error('Error fetching email:', err);
+      setEmail('');
+    }
+  };  
+
   const setPublic = async (userId, publicStatus) => {
     try {
       const response = await axios.put(`http://localhost:3001/setPublic`, {
@@ -67,10 +78,11 @@ function ProfilePage() {
   };
 
   useEffect(() => {
-    if (user) {
+    if (id) {
+      fetchEmail(id);
       if (isOwnProfile) {
-        fetchFavorites(user.id);
-        checkIfPublic(user.id);
+        fetchFavorites(id);
+        checkIfPublic(id);
       } else {
         checkIfPublic(id).then(() => {
           if (isPublic) {
@@ -78,14 +90,8 @@ function ProfilePage() {
           }
         });
       }
-    } else {
-      checkIfPublic(id).then(() => {
-        if (isPublic) {
-          fetchFavorites(id);
-        }
-      });
     }
-  }, [isOwnProfile, user, id]);
+  }, [isOwnProfile, id]);
 
   const handleDeleteAccount = async (e) => {
     e.preventDefault();
@@ -117,7 +123,6 @@ function ProfilePage() {
       console.error(err);
     }
   };
-  
 
   if (loading) {
     return <p>Loading...</p>;
@@ -126,6 +131,7 @@ function ProfilePage() {
   return (
     <div className="profile-page">
       <Navbar isLoggedIn={isLoggedIn} />
+      <h1 className="profile-header">Favorites List Of User: {email}</h1>
       {isOwnProfile ? (
         <>
           <button

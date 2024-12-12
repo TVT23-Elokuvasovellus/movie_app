@@ -9,6 +9,7 @@ import groupMemRouter from './routers/group-mem-router.js';
 import myGroupsRouter from './routers/my-groups-router.js';
 import favoritesRouter from './routers/favorites-router.js'
 import groupShareRouter from './routers/group-share-router.js';
+import userInfoRouter from './routers/user-info-router.js';
 
 const port = 3001;
 
@@ -31,6 +32,7 @@ app.use('/', groupMemRouter);
 app.use('/', myGroupsRouter);
 app.use('/', favoritesRouter);
 app.use('/', groupShareRouter);
+app.use('/api', userInfoRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

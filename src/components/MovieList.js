@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import '../styles/MovieList.css';
 
 const apiKey = process.env.REACT_APP_API_TOKEN;
 const fetchPosterUrl = (mo_id) => `https://api.themoviedb.org/3/movie/${mo_id}?api_key=${apiKey}`;
 
-function MovieList({ movies, fetchFavorites, user, isOwnProfile }) {
+function MovieList({ movies, fetchFavorites, isOwnProfile }) {
+  const { user } = useAuth();
   const [movieData, setMovieData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -53,6 +55,39 @@ function MovieList({ movies, fetchFavorites, user, isOwnProfile }) {
     }
   };
 
+  const handleAddFavorite = async (movie) => {
+    const payload = {
+      ac_id: user.id,
+      mo_id: movie.mo_id,
+      movie: movie.movie
+    };
+
+    console.log('Payload being sent:', payload);
+
+    if (!payload.ac_id || !payload.mo_id || !payload.movie) {
+      console.error('All fields are required:', payload);
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:3001/favorites', payload);
+      console.log(`Added ${response.data.movie} to favorites`);
+    } catch (error) {
+      if (error.response) {
+        console.error('Error response:', error.response);
+        if (error.response.status === 409) {
+          console.error('Conflict: Movie might already be in favorites:', error.response.data);
+        } else if (error.response.status === 400) {
+          console.error('Bad Request: The request was not formatted correctly or missing required fields:', error.response.data);
+        } else {
+          console.error('Error adding to favorites:', error.response.status, error.response.data);
+        }
+      } else {
+        console.error('Network or server error:', error.message);
+      }
+    }
+  };
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const indexOfLastMovie = currentPage * moviesPerPage;
@@ -82,12 +117,22 @@ function MovieList({ movies, fetchFavorites, user, isOwnProfile }) {
                   }
                 }} 
               />
-              {isOwnProfile && (
+              {isOwnProfile ? (
                 <button 
                   className="remove-favorite-button" 
                   onClick={() => handleRemoveFavorite(movie.mo_id)}
                 >
                   Remove Favorite
+                </button>
+              ) : (
+                <button 
+                  className="add-favorite-button" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleAddFavorite(movie);
+                  }}
+                >
+                  Add to Favorites
                 </button>
               )}
             </div>

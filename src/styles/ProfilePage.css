@@ -1,3 +1,7 @@
+.profile-page {
+  margin-top: 80px;
+}
+
 .profile-page p {
   color: red !important;
   font-size: 20px !important;
@@ -6,6 +10,10 @@
 
 .dark-mode .profile-page {
 
+}
+
+.profile-header { 
+  text-align: center; 
 }
 
 .delete-account-btn,

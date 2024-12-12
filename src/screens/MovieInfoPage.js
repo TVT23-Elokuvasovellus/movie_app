@@ -93,6 +93,38 @@ const deleteReview = () =>{
     setReviews(sortedReviews)
   };
 
+  const handleAddFavorite = async () => {
+    if (!user || !movieInfo) {
+      console.error('User or movie information is missing');
+      return;
+    }
+  
+    const payload = {
+      ac_id: user.id,
+      mo_id: movieId,
+      movie: movieInfo.title
+    };
+  
+    try {
+      const response = await axios.post(`${url}/favorites`, payload);
+      console.log(`Added ${movieInfo.title} to favorites`);
+    } catch (error) {
+      if (error.response) {
+        console.error('Error response:', error.response);
+        if (error.response.status === 409) {
+          console.error('Conflict: Movie might already be in favorites:', error.response.data);
+        } else if (error.response.status === 400) {
+          console.error('Bad Request: The request was not formatted correctly or missing required fields:', error.response.data);
+        } else {
+          console.error('Error adding to favorites:', error.response.status, error.response.data);
+        }
+      } else {
+        console.error('Network or server error:', error.message);
+      }
+    }
+  };
+  
+
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
@@ -220,7 +252,7 @@ const deleteReview = () =>{
     <div className='movie-info-page'>
       <Navbar isLoggedIn={isLoggedIn} />
       <div className='main-content'>
-        <h2>{movieInfo?.title}</h2>
+        <h2 className='header'>{movieInfo?.title}</h2>
         <div className='movie-info-container'>
           <div className='movie-poster'>
             <img className='poster' src={`https://image.tmdb.org/t/p/w342${movieInfo?.poster_path}`} alt={movieInfo?.title}/>
@@ -240,6 +272,7 @@ const deleteReview = () =>{
         </div>
         {isLoggedIn ? (
         <div>
+          <button className="favorite-button" onClick={handleAddFavorite}>Add To Favorites</button>
           <select value={selectedGroup} onChange={handleGroupChange}>
             <option value="">Select a group</option>
             {groups !== null && typeof groups !== 'undefined' ? (
@@ -251,7 +284,7 @@ const deleteReview = () =>{
                 <p>Groups could no be loaded.</p>
               )}
           </select>
-          <button onClick={handleShare}>Share to group</button>
+          <button className="share-button" onClick={handleShare}>Share to group</button>
         </div>
         ) : (
           <p>Login to share this movie.</p>
