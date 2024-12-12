@@ -93,11 +93,17 @@ function ProfilePage() {
       setMessage("Please check 'I'm sure' checkbox.");
       return;
     }
-
+  
     try {
+      const token = localStorage.getItem('authToken');
+  
       const response = await axios.delete('http://localhost:3001/deleteAccount', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         data: { userId: user.id, email }
       });
+  
       setMessage(response.data.message);
       if (response.data.success) {
         localStorage.removeItem('authToken');
@@ -111,6 +117,7 @@ function ProfilePage() {
       console.error(err);
     }
   };
+  
 
   if (loading) {
     return <p>Loading...</p>;
