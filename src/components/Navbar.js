@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth'; // Make sure this path is correct
+import { useAuth } from '../hooks/useAuth';
 import Notifications from './Notifications';
 import '../styles/Navbar.css';
 
@@ -13,6 +13,8 @@ const Navbar = () => {
     const [notifications, setNotifications] = useState([]);
     const [notificationsCount, setNotificationsCount] = useState(0);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [selectedInvites, setSelectedInvites] = useState([]);
+
     useEffect(() => {
         document.body.classList.toggle('dark-mode', isDarkMode);
         trackNotifications();
@@ -28,6 +30,7 @@ const Navbar = () => {
         document.body.classList.toggle('dark-mode', newMode);
         localStorage.setItem('isDarkMode', newMode);
     };
+
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
@@ -38,15 +41,93 @@ const Navbar = () => {
     const handleShowNotifications = () => setShowNotifications(true);
     const handleCloseNotifications = () => setShowNotifications(false);
 
-    const trackNotifications = () => {
-        const fetchedNotifications = [
-            // Example data
-            { id: 1, message: 'Notification 1' },
-            { id: 2, message: 'Notification 2' },
-            { id: 3, message: 'Notification 3' }
-        ];
-        setNotifications(fetchedNotifications);
-        setNotificationsCount(fetchedNotifications.length);
+    const handleSelectInvite = (inviteId) => {
+        setSelectedInvites((prevSelected) =>
+            prevSelected.includes(inviteId)
+                ? prevSelected.filter((id) => id !== inviteId)
+                : [...prevSelected, inviteId]
+        );
+    };
+
+    const respondGroupInvite = async (action) => {
+        const token = localStorage.getItem('authToken');
+
+        try {
+            await Promise.all(selectedInvites.map(async (inviteId) => {
+                const invite = notifications.find((notification) => notification.id === inviteId);
+                if (invite && invite.groupId && invite.memberId) {
+                    const response = await fetch(`http://localhost:3001/group/${invite.groupId}/respond`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({ memberId: invite.memberId, action }),
+                    });
+
+                    if (!response.ok) {
+                        const data = await response.json();
+                        console.error(data.error);
+                    }
+                }
+            }));
+
+            trackNotifications();
+            setSelectedInvites([]);
+        } catch (error) {
+            console.error("Error:", error.message);
+        }
+    };
+
+    const trackNotifications = async () => {
+        const token = localStorage.getItem('authToken');
+        const fetchedNotifications = [];
+
+        try {
+            const response = await fetch(`http://localhost:3001/myGroups`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                const myGroups = data.myGroups;
+                const pendingGroupInvites = await Promise.all(
+                    myGroups.map(async (group) => {
+                        const groupResponse = await fetch(`http://localhost:3001/group/${group.gr_id}/pending`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                        });
+
+                        const groupData = await groupResponse.json();
+                        if (groupResponse.ok) {
+                            return groupData.pendingMembers.map(member => ({
+                                id: member.id,
+                                groupId: group.gr_id,
+                                message: `Group invite: ${member.email}`,
+                                memberId: member.member
+                            }));
+                        }
+                        return [];
+                    })
+                );
+
+                const allPendingInvites = pendingGroupInvites.flat();
+                const allNotifications = [...fetchedNotifications, ...allPendingInvites];
+                setNotifications(allNotifications);
+                setNotificationsCount(allNotifications.length);
+            } else {
+                console.error(data.error || "Failed to fetch groups.");
+            }
+        } catch (error) {
+            console.error("Error:", error.message);
+        }
     };
 
     return (
@@ -93,10 +174,12 @@ const Navbar = () => {
                 show={showNotifications} 
                 handleClose={handleCloseNotifications} 
                 notifications={notifications}
+                respondGroupInvite={respondGroupInvite}
+                handleSelectInvite={handleSelectInvite}
+                selectedInvites={selectedInvites}
             />
         </>
     );
 };
-
 
 export default Navbar;

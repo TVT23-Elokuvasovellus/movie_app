@@ -1,13 +1,20 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 
-const Notifications = ({ show, handleClose, notifications }) => {
+const Notifications = ({ show, handleClose, notifications, handleSelectInvite, selectedInvites, respondGroupInvite }) => {
     const displayNotifications = () => {
         if (notifications.length === 0) {
             return <p>No notifications.</p>;
         } else {
             return notifications.map(notification => (
-                <p key={notification.id}>{notification.message}</p>
+                <div key={notification.id} className="notification">
+                    <Form.Check 
+                        type="checkbox"
+                        checked={selectedInvites.includes(notification.id)}
+                        onChange={() => handleSelectInvite(notification.id)}
+                        label={notification.message}
+                    />
+                </div>
             ));
         }
     };
@@ -23,6 +30,20 @@ const Notifications = ({ show, handleClose, notifications }) => {
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
+                </Button>
+                <Button 
+                    variant="success" 
+                    onClick={() => respondGroupInvite('accept')}
+                    disabled={selectedInvites.length === 0}
+                >
+                    Accept
+                </Button>
+                <Button 
+                    variant="danger" 
+                    onClick={() => respondGroupInvite('reject')}
+                    disabled={selectedInvites.length === 0}
+                >
+                    Reject
                 </Button>
             </Modal.Footer>
         </Modal>
