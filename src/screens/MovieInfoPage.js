@@ -178,7 +178,6 @@ const deleteReview = () =>{
             console.error('Movie details error:', err);
         });
 
-        // Fetch possible reviews of the movie
         getReviews();
         const meta = document.createElement('meta'); meta.name = "viewport"; 
         meta.content = "width=device-width, initial-scale=1"; 

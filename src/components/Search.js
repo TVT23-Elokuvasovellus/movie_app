@@ -16,7 +16,7 @@ function Search() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const token = process.env.REACT_APP_API_TOKEN;
-    const { user } = useAuth();
+    const { user, isLoggedIn } = useAuth();
     const navigate = useNavigate();
 
     const options = {
@@ -106,6 +106,11 @@ function Search() {
     };
 
     const handleAddFavorite = (movie) => {
+        if (!isLoggedIn) {
+            navigate('/login');
+            return;
+        }
+
         const payload = {
             ac_id: user?.id,
             mo_id: movie.id,
@@ -134,8 +139,6 @@ function Search() {
             console.error('Error adding to favorites:', error);
         });
     };
-
-    
 
     useEffect(() => {
         getGenres();

@@ -11,6 +11,7 @@ function ProfilePage() {
   const { isLoggedIn, user, loading } = useAuth();
   const [isOwnProfile, setIsOwnProfile] = useState(null);
   const [email, setEmail] = useState('');
+  const [inputEmail, setInputEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isSure, setIsSure] = useState(false);
   const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -37,9 +38,8 @@ function ProfilePage() {
 
   const fetchEmail = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:3001/api/email?user_id=${userId}`); // Updated route
+      const response = await axios.get(`http://localhost:3001/api/email?user_id=${userId}`);
       setEmail(response.data.email || 'User');
-      document.title = `Favorites List of User: ${response.data.email || 'User'}`;
     } catch (err) {
       console.error('Error fetching email:', err);
       setEmail('');
@@ -135,7 +135,7 @@ function ProfilePage() {
       {isOwnProfile ? (
         <>
           <button
-            className="btn btn-primary"
+            className="share-btn"
             onClick={() => {
               setPublic(user.id, !isPublic);
               setIsPublic(!isPublic);
@@ -146,7 +146,10 @@ function ProfilePage() {
           </button>
           {visibilityMessage && <p className="visibility-message">{visibilityMessage}</p>}
           <MovieList movies={favorites} fetchFavorites={fetchFavorites} user={user} isOwnProfile={isOwnProfile} />
-          <button className="btn btn-danger delete-account-btn" onClick={() => setShowDeleteForm(true)}>
+          <button
+            className="btn btn-danger delete-account-btn"
+            onClick={() => setShowDeleteForm(!showDeleteForm)}
+          >
             Account Deletion
           </button>
           {showDeleteForm && (
@@ -157,8 +160,8 @@ function ProfilePage() {
                     type="email"
                     className="form-control input-field"
                     placeholder="Enter your email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={inputEmail}
+                    onChange={(e) => setInputEmail(e.target.value)}
                     required
                   />
                 </div>

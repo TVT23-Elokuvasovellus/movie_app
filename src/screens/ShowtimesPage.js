@@ -7,11 +7,9 @@ const Showtimes = ({ isLoggedIn }) => {
   return (
     <div>
       <Navbar isLoggedIn={isLoggedIn} />
-      <div className="showtimes-page container mt-5">
-        <h1>Näytösajat - Finnkino</h1>
-        <div className="cinema-schedule-container">
-          <CinemaSchedule />
-        </div>
+      <h1 className="showtimes-header">Showtimes - Finnkino</h1>
+      <div className="cinema-schedule-container">
+        <CinemaSchedule />
       </div>
     </div>
   );

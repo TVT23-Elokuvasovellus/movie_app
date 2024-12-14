@@ -19,24 +19,26 @@ const PublicFavoritesList = () => {
   }, []);
 
   return (
-    <div className="public-favorites-list">
-      <h2>Users with Public Favorites</h2>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map(user => (
-            <tr key={user.ac_id}>
-              <td>
-                <Link to={`/profile/${user.ac_id}`}>{user.email}</Link>
-              </td>
+    <div className="container">
+      <div className="public-favorites-list">
+        <h2>Shared Favorite Lists:</h2>
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>User:</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map(user => (
+              <tr key={user.ac_id}>
+                <td>
+                  <Link to={`/profile/${user.ac_id}`}>{user.email}</Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

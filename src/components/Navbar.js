@@ -110,7 +110,7 @@ const Navbar = () => {
                             return groupData.pendingMembers.map(member => ({
                                 id: member.id,
                                 groupId: group.gr_id,
-                                message: `Group invite: ${member.email}`,
+                                message: `User ${member.email} requests to join group ${group.gr_id}`,
                                 memberId: member.member
                             }));
                         }

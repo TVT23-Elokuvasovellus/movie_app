@@ -1,5 +1,6 @@
 .profile-page {
   margin-top: 80px;
+  margin-bottom: 80px;
 }
 
 .profile-page p {
@@ -8,12 +9,22 @@
   font-weight: bold !important;
 }
 
-.dark-mode .profile-page {
-
+.profile-header { 
+  color: black;
+  text-align: center; 
 }
 
-.profile-header { 
-  text-align: center; 
+.dark-mode .profile-header {
+  color: white;
+}
+
+.share-btn {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
 }
 
 .delete-account-btn,

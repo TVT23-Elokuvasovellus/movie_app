@@ -15,3 +15,13 @@
   min-height: 0;
   width: 100%;
 }
+
+.showtimes-header {
+  margin-top: 80px;
+  text-align: center; 
+  color: black;
+}
+
+.dark-mode .showtimes-header {
+  color: white;
+}

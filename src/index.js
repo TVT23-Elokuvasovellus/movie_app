@@ -4,11 +4,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { pingServer } from './pingServer';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// for Bootstrap's JS components:
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './styles/index.css';
 
-// Screens
 import ErrorPage from './screens/ErrorPage';
 import Home from './screens/HomePage';
 import Login from './screens/LoginPage';
