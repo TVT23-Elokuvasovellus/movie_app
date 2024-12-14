@@ -255,7 +255,7 @@ function CinemaSchedule() {
         handleClose={handleCloseModal}
         handleConfirm={handleConfirmShare}
         movieTitle={selectedMovie?.Title || ''}
-        groupName={groups.find(group => group.ID === selectedGroup)?.Name || ''}
+        groupName={selectedGroup}
       />
     </div>
   );  

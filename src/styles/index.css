@@ -1,4 +1,11 @@
-/* Global Styles for Light Mode */
+.h1, .h2, .h3 {
+  color: black;
+}
+
+.dark-mode .h1, .dark-mode .h2, .dark-mode .h3 {
+  color: white;
+}
+
 body, html {
   margin: 0;
   padding: 0;
@@ -6,7 +13,6 @@ body, html {
   color: black;
 }
 
-/* Global Styles for Dark Mode */
 body.dark-mode, html.dark-mode {
   background-color: black;
   color: white;
@@ -16,7 +22,7 @@ body.dark-mode, html.dark-mode {
   border: none;
 }
 
-.root-container.dark-mode {
+.root-container .dark-mode {
   background-color: black;
   border: none;
 }
@@ -46,9 +52,12 @@ body.dark-mode a:hover {
   text-decoration: underline;
 }
 
+body .main-content {
+  background-color: white;
+}
+
 body.dark-mode .main-content {
-  background-color: black;
-  color: white;
+  background-color: #1e1e1e;
 }
 
 @media (max-width: 768px) {

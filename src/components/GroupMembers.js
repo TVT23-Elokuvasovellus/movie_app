@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import '../styles/GroupMembers.css';
+
 
 function GroupMembers({ groupId }) {
   const [members, setMembers] = useState([]);
@@ -58,8 +60,8 @@ function GroupMembers({ groupId }) {
         <ul>
           {members.map((member) => (
             <li key={member.member_id}>
-              <div>User: {member.email}
-              <button className="btn btn-danger btn-sm" onClick={() => deleteMember(member.member_id)}>Remove Member</button>
+              <div className="member-item">User: {member.email}
+                <button className="btn btn-danger btn-sm" onClick={() => deleteMember(member.member_id)}>Remove Member</button>
               </div>
             </li>
           ))}
@@ -68,6 +70,6 @@ function GroupMembers({ groupId }) {
         <p>No members in this group.</p>
       )}
     </div>
-  )
+  )  
 }
 export default GroupMembers;

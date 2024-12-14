@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import '../styles/MovieList.css';
 
@@ -8,7 +8,8 @@ const apiKey = process.env.REACT_APP_API_TOKEN;
 const fetchPosterUrl = (mo_id) => `https://api.themoviedb.org/3/movie/${mo_id}?api_key=${apiKey}`;
 
 function MovieList({ movies, fetchFavorites, isOwnProfile }) {
-  const { user } = useAuth();
+  const { user, isLoggedIn } = useAuth();
+  const navigate = useNavigate();
   const [movieData, setMovieData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -56,6 +57,11 @@ function MovieList({ movies, fetchFavorites, isOwnProfile }) {
   };
 
   const handleAddFavorite = async (movie) => {
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+
     const payload = {
       ac_id: user.id,
       mo_id: movie.mo_id,

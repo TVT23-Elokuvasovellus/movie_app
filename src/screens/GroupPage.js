@@ -128,13 +128,16 @@ function GroupPage() {
   };
 
   return message ? (
-    <div className="container text-center mt-5">
-      {message}
-      <div>
-        <Link to="/" className="btn btn-secondary mb-3">Back to home</Link>
+    <div>
+      <Navbar isLoggedIn={isLoggedIn} />
+      <div className="container text-center mt-5">
+        {message}
+        <div>
+          <Link to="/" className="btn btn-secondary mb-3">Back to home</Link>
+        </div>
+        <h2>Group: {groupName}</h2>
+        <button className="btn btn-success mt-3" onClick={() => sendGroupInvite(groupId)}>Request Invite</button>
       </div>
-      <h2 className="mt-4">Group: {groupName}</h2>
-      <button className="btn btn-success mt-3" onClick={() => sendGroupInvite(groupId)}>Request Invite</button>
     </div>
   ) : (
     <div>
@@ -142,7 +145,9 @@ function GroupPage() {
   <div className="container">
     <div className="group-content">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>Group: {groupName}</h1>
+        <div className="title-container">
+          <h1 className="group-h1">{groupName}</h1>
+        </div>
         <button className="btn btn-danger" onClick={deleteGroup}>
           Delete Group
         </button>

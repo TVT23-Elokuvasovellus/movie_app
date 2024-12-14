@@ -51,7 +51,7 @@ body {
   font-size: 1.5rem;
   cursor: pointer;
   margin-right: 1rem;
-  display: none; /* Hide by default */
+  display: none;
 }
 
 .nav-links {
@@ -72,7 +72,14 @@ body {
   text-decoration: underline;
 }
 
-/* Mobile adjustments */
+.modal-content {
+  background-color: white;
+}
+
+.dark-mode .modal-content {
+  background-color: #1e1e1e;
+}
+
 @media (max-width: 768px) {
   .navbar {
       flex-wrap: wrap;
@@ -84,11 +91,11 @@ body {
   }
 
   .menu-button {
-      display: block; /* Show on mobile */
+      display: block;
   }
 
   .nav-links {
-      display: none; /* Hide by default */
+      display: none;
       flex-direction: column;
       width: 100%;
       background-color: #5f5f5f;
@@ -96,7 +103,7 @@ body {
   }
 
   .nav-links.open {
-      display: flex; /* Show when menu is open */
+      display: flex;
   }
 
   .navbar-right {
@@ -106,7 +113,7 @@ body {
   }
 
   .nav-button, .dark-mode-button {
-      width: 100%; /* Full width buttons on mobile */
+      width: 100%;
       margin: 0.5rem 0;
   }
 }

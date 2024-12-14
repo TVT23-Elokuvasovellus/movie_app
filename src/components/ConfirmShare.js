@@ -8,7 +8,7 @@ const ConfirmShare = ({ show, handleClose, handleConfirm, movieTitle, groupName 
     <div className="modal-backdrop">
       <div className="modal-content">
         <h2>Share Movie</h2>
-        <p>Do you want to share <strong>{movieTitle}</strong> on <strong>{groupName}</strong>?</p>
+        <p>Do you want to share <strong>{movieTitle}</strong> on <strong>group {groupName}</strong>?</p>
         <div className="modal-actions">
           <button onClick={handleConfirm}>Yes</button>
           <button onClick={handleClose}>No</button>

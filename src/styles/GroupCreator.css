@@ -17,3 +17,20 @@
   border-color: #002850;
   color: #ffffff; 
 }
+
+div.card.h-100.border-primary.shadow {
+  background-color: white;
+}
+
+.dark-mode div.card.h-100.border-primary.shadow {
+  background-color: #5f5f5f;
+}
+
+h3.mb-3 {
+  color: black;
+}
+
+
+.dark-mode h3.mb-3 {
+  color: white;
+}

@@ -28,9 +28,6 @@ const Notifications = ({ show, handleClose, notifications, handleSelectInvite, s
                 {displayNotifications()}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
                 <Button 
                     variant="success" 
                     onClick={() => respondGroupInvite('accept')}
