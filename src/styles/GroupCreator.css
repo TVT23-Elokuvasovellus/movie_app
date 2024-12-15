@@ -1,12 +1,19 @@
 .btn-custom {
   background-color: white; 
   border-color: black; 
-  color: #0056b3; 
 }
 
 .btn-custom:hover {
   background-color: #0056b3; 
-  border-color: #003f7f; 
+}
+
+.dark-mode .btn-custom {
+  background-color: #5f5f5f;
+  color: #0056b3; 
+}
+
+.dark-mode .btn-custom:hover {
+  background-color: #0056b3; 
   color: #ffffff;
 }
 
@@ -33,4 +40,8 @@ h3.mb-3 {
 
 .dark-mode h3.mb-3 {
   color: white;
+}
+
+.list-groups {
+  width: 800px;
 }

@@ -89,7 +89,7 @@ const GroupShare = () => {
         {sharedShows.length > 0 ? (
           sharedShows.map((show) => (
             <div key={show.sh_id} className="col-md-6 mb-4">
-              <div className="card shadow-sm">
+              <div className="show-info">
                 <div className="card-body">
                   <h5 className="card-title">{show.title}</h5>
                   <p className="card-text">
@@ -114,7 +114,7 @@ const GroupShare = () => {
         {sharedMovies.length > 0 ? (
           sharedMovies.map((movie) => (
             <div key={movie.sh_id} className="col-md-6 mb-4">
-              <div className="card shadow-sm">
+              <div className="movie-info">
                 {movie.img && (
                   <img
                     src={movie.img}

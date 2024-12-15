@@ -52,6 +52,7 @@ form {
 
 .btn-secondary {
     background-color: white;
+    color: #007bff;
 }
 
 .dark-mode .btn-secondary {
