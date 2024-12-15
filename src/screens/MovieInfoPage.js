@@ -45,18 +45,23 @@ function MovieInfo() {
     })
   }
 
-  const addReview = (event) =>{
+  const addReview = (event) => {
     event.preventDefault();
-    console.log("Addreview wohoo!", movieInfo?.title);
-    axios.post(url + '/movie/' + movieId +'/create', {
-        movieName: movieInfo?.title,
-        stars: event.currentTarget.elements.stars.value,
-        text: event.currentTarget.elements.review.value,
-        account: user?.id
-    }).catch(err => {
-      console.error('Error trying to add a review: ', err);
+    axios.post(url + '/movie/' + movieId + '/create', {
+      movieName: movieInfo?.title,
+      stars: event.currentTarget.elements.stars.value,
+      text: event.currentTarget.elements.review.value,
+      account: user?.id
     })
-  }
+    .then(() => {
+      console.log('Review added successfully');
+      window.location.reload();
+    })
+    .catch(err => {
+      console.error('Error trying to add a review: ', err);
+    });
+  };
+  
 
 const deleteReview = () =>{
     axios.delete(url + '/movie/' + movieId + '/delete', {
