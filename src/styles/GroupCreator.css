@@ -45,3 +45,13 @@ h3.mb-3 {
 .list-groups {
   width: 800px;
 }
+
+.card {
+  color: black;
+  background-color: white;
+}
+
+.dark-mode .card {
+  color: white;
+  background-color: #5f5f5f;
+}

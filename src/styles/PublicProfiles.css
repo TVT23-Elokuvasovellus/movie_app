@@ -1,0 +1,17 @@
+.table thead th {
+    color: black;
+    background-color: white;
+}
+
+.dark-mode .table thead th {
+    color: white;
+    background-color: #555;
+}
+
+tr td:nth-child(odd) {
+    background-color: white;
+}
+
+.dark-mode tr td:nth-child(odd) {
+    background-color: #555;
+}
