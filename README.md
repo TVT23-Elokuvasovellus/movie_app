@@ -1,10 +1,12 @@
 ## Getting Started
 
-Create a PostgreSQL database 'MovieDB' and execute ./server/moviedb.sql script with the query tool.
+Create a PostgreSQL database 'moviedb' and execute ./server/moviedb.sql script with the query tool.
 Make sure ./server/db.js file has correct database information.
 
+If you don't have a TMDB API key, register and get yourself one here: https://www.themoviedb.org/
+
 Create a .env file in the project directory:
-REACT_APP_API_TOKEN={write your TMDB token here}
+REACT_APP_API_TOKEN={write your TMDB API key here}
 
 ## Available Scripts
 
