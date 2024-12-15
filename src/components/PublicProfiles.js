@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/PublicProfiles.css';
 
 const PublicFavoritesList = () => {
   const [users, setUsers] = useState([]);
@@ -29,8 +30,8 @@ const PublicFavoritesList = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
-              <tr key={user.ac_id}>
+            {users.map((user, index) => (
+              <tr key={user.ac_id} className={index % 2 === 0 ? 'even' : 'odd'}>
                 <td>
                   <Link to={`/profile/${user.ac_id}`}>{user.email}</Link>
                 </td>
