@@ -8,6 +8,10 @@ If you don't have a TMDB API key, register and get yourself one here: https://ww
 Create a .env file in the project directory:
 REACT_APP_API_TOKEN={write your TMDB API key here}
 
+Install packages:
+### `npm install`
+### `cd server` and `npm install`
+
 ## Available Scripts
 
 In the project directory, you can run:
